@@ -1,0 +1,149 @@
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0695C963AD9986E3321',
+    participant: undefined
+  },
+  messageTimestamp: 1679338978,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'hola',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'hola',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0CF1D4A71C4D777B9F1',
+    participant: undefined
+  },
+  messageTimestamp: 1679338983,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'mgalara@gmail.com',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'mgalara@gmail.com',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0A2BF9045545B5F752E',
+    participant: undefined
+  },
+  messageTimestamp: 1679338986,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'asd123',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'asd123',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0DFB1A2DF57CE639538',
+    participant: undefined
+  },
+  messageTimestamp: 1679338989,
+  pushName: 'Martín',
+  message: Message {
+    conversation: '3515924253',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '3515924253',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493517428908@s.whatsapp.net',
+    fromMe: false,
+    id: '03BEAF61C001FF80459FBB0780D724C5',
+    participant: undefined
+  },
+  messageTimestamp: 1679339443,
+  pushName: 'Sistema SIGES SA',
+  message: Message {
+    conversation: 'Complicado el lunes 😫',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  verifiedBizName: 'Sistema SIGES SA',
+  body: 'Complicado el lunes 😫',
+  from: '5493517428908'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515225828@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB04FF2BBE101E2D2BE',
+    participant: undefined
+  },
+  messageTimestamp: 1679340462,
+  pushName: 'Sistema SIGES',
+  message: Message {
+    documentMessage: DocumentMessage {
+      url: 'https://mmg.whatsapp.net/v/t62.7119-24/40118679_1394133451352709_4268194544400384198_n.enc?ccb=11-4&oh=01_AdR3b9C6f4_UvBy-r4NQq5sLhfVo3_SFJ0bP4npx00cb4g&oe=64400B93&mms3=true',
+      mimetype: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      title: 'Gastos-Viaje control caso Capri 07032023.xlsx',
+      fileSha256: [Uint8Array],
+      fileLength: [Long],
+      mediaKey: [Uint8Array],
+      fileName: 'Gastos-Viaje control caso Capri 07032023.xlsx',
+      fileEncSha256: [Uint8Array],
+      directPath: '/v/t62.7119-24/40118679_1394133451352709_4268194544400384198_n.enc?ccb=11-4&oh=01_AdR3b9C6f4_UvBy-r4NQq5sLhfVo3_SFJ0bP4npx00cb4g&oe=64400B93',
+      mediaKeyTimestamp: [Long],
+      contactVcard: false,
+      caption: ''
+    },
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  verifiedBizName: 'Sistema SIGES',
+  body: '_event_document__59a8f89e-b3ff-4d31-bde6-8cf0a600d9fb',
+  from: '5493515225828'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515225828@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB01CA33E2EC43FC1DF',
+    participant: undefined
+  },
+  messageTimestamp: 1679340503,
+  pushName: 'Sistema SIGES',
+  message: Message {
+    conversation: 'Adri, te mando el resumen de gastos del viaje de la referencia, y te dejo en mano los 4 comprobantes, dale_',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  verifiedBizName: 'Sistema SIGES',
+  body: 'Adri, te mando el resumen de gastos del viaje de la referencia, y te dejo en mano los 4 comprobantes, dale_',
+  from: '5493515225828'
+}
