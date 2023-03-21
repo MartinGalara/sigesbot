@@ -8,7 +8,9 @@ const axios = require('axios')
 
 const nodemailer = require("nodemailer")
 
-//brjcksjmouxhgpdo
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 let ticket = {}
 
@@ -22,7 +24,7 @@ const sendEmail = async (ticket) => {
         secure: true, // true for 465, false for other ports
         auth: {
           user: "mgalara@gmail.com", // generated ethereal user
-          pass: "brjcksjmouxhgpdo", // generated ethereal password
+          pass: process.env.GMAIL_PASS, // generated ethereal password
         },
       });
     

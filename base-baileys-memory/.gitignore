@@ -6,11 +6,15 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+core.class.log*
 
 node_modules
+bot_sessions
+bot.qr.png
 dist
 dist-ssr
 .local
+
 
 # Editor directories and files
 .vscode/
