@@ -72,21 +72,32 @@ const validateUser = async (email) => {
     }
 }
 
-const flujoPrincipal = addKeyword(['hola','soporte','ayuda'])
-.addAnswer(['Gracias por comunicarte con Sistema Siges.','Para generar un ticket de soporte necesitamos validar la cuenta.','Por favor ingresa el correo electronico.'],
+const flujoInstructivos = addKeyword(['Necesito un instructivo'])
+.addAnswer(['Esta sección se encuentra en desarrollo'],{
+    capture: true,
+    buttons: [{ body: 'Inicio' }],
+})
+
+const flujoSoporteFiscal = addKeyword(['Impresora fiscal'])
+.addAnswer(['Esta sección se encuentra en desarrollo'])
+
+const flujoSoporteSiges = addKeyword(['Sistema SIGES'])
+.addAnswer(['Para generar un ticket de soporte necesitamos validar la cuenta.','Por favor ingresa el correo electronico.'],
 {
     capture: true
 },
-async (ctx, {fallBack,flowDynamic}) => {
+async (ctx, {endFlow}) => {
     if(!ctx.body.includes('@')) {
-        await flowDynamic([{body:'Correo invalido'}])
-        return fallBack()
+        return endFlow({body: '❌ Correo invalido ❌',
+        buttons:[{body:'Ingresar correo' }]
+        })
     }
     let email = ctx.body
-    const user = validateUser(email)
+    const user = await validateUser(email)
     if(!user){
-        await flowDynamic([{body:'Correo invalido'}])
-        return fallBack()
+        return endFlow({body: '❌ Correo invalido ❌',
+        buttons:[{body:'Ingresar correo' }]
+        })
     }
     ticket.email = email
 })
@@ -103,9 +114,39 @@ async (ctx, {fallBack,flowDynamic}) => {
 },
 (ctx) => {
     ticket.phone = ctx.body
-    sendEmail(ticket)
 })
-.addAnswer(['A la brevedad un operador se contactara con ustedes para solucionar el problema','Gracias por comunicarse!'])
+.addAnswer(['Seleccione la opcion deseada'],{
+    capture: true,
+    buttons: [{ body: 'Enviar ticket' }, { body: 'Cancelar ticket' }],
+},
+(ctx,{endFlow}) =>{
+    if(ctx.body === 'Enviar ticket') {
+        sendEmail(ticket)
+        return endFlow({body: 'A la brevedad un operador se contactara con ustedes para solucionar el problema. Gracias por comunicarse!'
+        })
+    }
+    else{
+        return endFlow({body: 'Se cancelo el envio del ticket',
+        buttons:[{body:'Inicio' }]
+        })
+    }
+})
+
+const flujoSoporte = addKeyword(['Necesito soporte'])
+.addAnswer(['Seleccione sobre que necesita soporte'],
+{
+    buttons: [{ body: 'Sistema SIGES' }, { body: 'Impresora fiscal' }],
+},
+null,
+[flujoSoporteSiges,flujoSoporteFiscal])
+
+const flujoPrincipal = addKeyword(['hola','soporte','ayuda','Ingresar correo','Inicio'])
+.addAnswer(['Gracias por comunicarte con Sistema Siges.','En que podemos ayudarte ?'],
+{
+    buttons: [{ body: 'Necesito un instructivo' }, { body: 'Necesito soporte' }],
+},
+null,
+[flujoInstructivos,flujoSoporte])
 
 const main = async () => {
     const adapterDB = new MockAdapter()
