@@ -6,10 +6,13 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-core.class.log*
+core.class.log
+baileys.log
+/bot_sessions/
+/bot_sessions
+bot_sessions/
 
 node_modules
-bot_sessions
 bot.qr.png
 dist
 dist-ssr
@@ -26,6 +29,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
 
 # dotenv environment variables file
 .env
