@@ -18,6 +18,8 @@ const sendEmail = async (ticket) => {
 
     console.log(ticket)
 
+    return console.log('correo enviado')
+
     let transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 465,
@@ -72,16 +74,8 @@ const validateUser = async (email) => {
     }
 }
 
-const flujoInstructivos = addKeyword(['Necesito un instructivo'])
-.addAnswer(['Esta sección se encuentra en desarrollo'],{
-    capture: true,
-    buttons: [{ body: 'Inicio' }],
-})
-
-const flujoSoporteFiscal = addKeyword(['Impresora fiscal'])
-.addAnswer(['Esta sección se encuentra en desarrollo'])
-
-const flujoSoporteSiges = addKeyword(['Sistema SIGES'])
+//////////////////////////////////////////////////////////////////////// FLUJO IMPRESORA COMUN ////////////////////////////////////////////////////////////////////////////////
+const flujoImpresoraComun = addKeyword('Impresora común')
 .addAnswer(['Para generar un ticket de soporte necesitamos validar la cuenta.','Por favor ingresa el correo electronico.'],
 {
     capture: true
@@ -89,26 +83,54 @@ const flujoSoporteSiges = addKeyword(['Sistema SIGES'])
 async (ctx, {endFlow}) => {
     if(!ctx.body.includes('@')) {
         return endFlow({body: '❌ Correo invalido ❌',
-        buttons:[{body:'Ingresar correo' }]
+        buttons:[{body:'Inicio' }]
         })
     }
     let email = ctx.body
     const user = await validateUser(email)
     if(!user){
         return endFlow({body: '❌ Correo invalido ❌',
-        buttons:[{body:'Ingresar correo' }]
+        buttons:[{body:'Inicio' }]
         })
     }
     ticket.email = email
 })
-.addAnswer(['Ingresa una descripcion del problema'],
+.addAnswer('Ingrese el domicilio',
+{
+    capture: true
+},
+(ctx) => {
+    ticket.adress = ctx.body
+})
+.addAnswer('Indique en que computadora desea instalarla / hay un problema',
+{
+    capture: true
+},
+(ctx) => {
+    ticket.pf = ctx.body
+})
+.addAnswer('Ingrese ID de TeamViewer',
+{
+    capture: true
+},
+(ctx) => {
+    ticket.idTV = ctx.body
+})
+.addAnswer('Ingrese contraseña de TeamViewer',
+{
+    capture: true
+},
+(ctx) => {
+    ticket.passTV = ctx.body
+})
+.addAnswer(['Ingrese una descripcion del problema','Si necesita instalar una impresora','Indique marca/modelo | si se encuentra conectada'],
 {
     capture: true
 },
 (ctx) => {
     ticket.description = ctx.body
 })
-.addAnswer(['Ingresa un telefono de contacto'],
+.addAnswer('Ingrese telefono de contacto',
 {
     capture: true
 },
@@ -122,7 +144,7 @@ async (ctx, {endFlow}) => {
 (ctx,{endFlow}) =>{
     if(ctx.body === 'Enviar ticket') {
         sendEmail(ticket)
-        return endFlow({body: 'A la brevedad un operador se contactara con ustedes para solucionar el problema. Gracias por comunicarse!'
+        return endFlow({body: 'Ticket generado. Gracias por comunicarse con nosotros.'
         })
     }
     else{
@@ -132,21 +154,202 @@ async (ctx, {endFlow}) => {
     }
 })
 
-const flujoSoporte = addKeyword(['Necesito soporte'])
-.addAnswer(['Seleccione sobre que necesita soporte'],
-{
-    buttons: [{ body: 'Sistema SIGES' }, { body: 'Impresora fiscal' }],
-},
-null,
-[flujoSoporteSiges,flujoSoporteFiscal])
+//////////////////////////////////////////////////////////////////////// FLUJO IMPRESORA FISCAL ////////////////////////////////////////////////////////////////////////////////
 
-const flujoPrincipal = addKeyword(['hola','soporte','ayuda','Ingresar correo','Inicio'])
+const flujoImpresoraFiscal = addKeyword('Impresora fiscal')
+.addAnswer(['Para generar un ticket de soporte necesitamos validar la cuenta.','Por favor ingresa el correo electronico.'],
+{
+    capture: true
+},
+async (ctx, {endFlow}) => {
+    if(!ctx.body.includes('@')) {
+        return endFlow({body: '❌ Correo invalido ❌',
+        buttons:[{body:'Inicio' }]
+        })
+    }
+    let email = ctx.body
+    const user = await validateUser(email)
+    if(!user){
+        return endFlow({body: '❌ Correo invalido ❌',
+        buttons:[{body:'Inicio' }]
+        })
+    }
+    ticket.email = email
+})
+.addAnswer('Ingrese el domicilio',
+{
+    capture: true
+},
+(ctx) => {
+    ticket.adress = ctx.body
+})
+.addAnswer('Indique punto de facturacion',
+{
+    capture: true
+},
+(ctx) => {
+    ticket.pf = ctx.body
+})
+.addAnswer('Ingrese ID de TeamViewer',
+{
+    capture: true
+},
+(ctx) => {
+    ticket.idTV = ctx.body
+})
+.addAnswer('Ingrese contraseña de TeamViewer',
+{
+    capture: true
+},
+(ctx) => {
+    ticket.passTV = ctx.body
+})
+.addAnswer(['Ingrese una descripcion del problema','Si necesita instalar una impresora fiscal','Indique marca/modelo | si se encuentra conectada y que tipo de conexion ( USB o UTP )'],
+{
+    capture: true
+},
+(ctx) => {
+    ticket.description = ctx.body
+})
+.addAnswer('Ingrese telefono de contacto',
+{
+    capture: true
+},
+(ctx) => {
+    ticket.phone = ctx.body
+})
+.addAnswer(['Seleccione la opcion deseada'],{
+    capture: true,
+    buttons: [{ body: 'Enviar ticket' }, { body: 'Cancelar ticket' }],
+},
+(ctx,{endFlow}) =>{
+    if(ctx.body === 'Enviar ticket') {
+        sendEmail(ticket)
+        return endFlow({body: 'Ticket generado. Gracias por comunicarse con nosotros.'
+        })
+    }
+    else{
+        return endFlow({body: 'Se cancelo el envio del ticket',
+        buttons:[{body:'Inicio' }]
+        })
+    }
+})
+
+//////////////////////////////////////////////////////////////////////// FLUJO SISTEMA SIGES ////////////////////////////////////////////////////////////////////////////////
+
+const flujoSiges = addKeyword('Sistema SIGES')
+.addAnswer(['Para generar un ticket de soporte necesitamos validar la cuenta.','Por favor ingresa el correo electronico.'],
+{
+    capture: true
+},
+async (ctx, {endFlow}) => {
+    if(!ctx.body.includes('@')) {
+        return endFlow({body: '❌ Correo invalido ❌',
+        buttons:[{body:'Inicio' }]
+        })
+    }
+    let email = ctx.body
+    const user = await validateUser(email)
+    if(!user){
+        return endFlow({body: '❌ Correo invalido ❌',
+        buttons:[{body:'Inicio' }]
+        })
+    }
+    ticket.email = email
+})
+.addAnswer('Ingrese el domicilio',
+{
+    capture: true
+},
+(ctx) => {
+    ticket.adress = ctx.body
+})
+.addAnswer('Indique punto de facturacion',
+{
+    capture: true
+},
+(ctx) => {
+    ticket.pf = ctx.body
+})
+.addAnswer('Ingrese ID de TeamViewer',
+{
+    capture: true
+},
+(ctx) => {
+    ticket.idTV = ctx.body
+})
+.addAnswer('Ingrese contraseña de TeamViewer',
+{
+    capture: true
+},
+(ctx) => {
+    ticket.passTV = ctx.body
+})
+.addAnswer('Ingrese una descripcion del problema',
+{
+    capture: true
+},
+(ctx) => {
+    ticket.description = ctx.body
+})
+.addAnswer('Ingrese telefono de contacto',
+{
+    capture: true
+},
+(ctx) => {
+    ticket.phone = ctx.body
+})
+.addAnswer(['Seleccione la opcion deseada'],{
+    capture: true,
+    buttons: [{ body: 'Enviar ticket' }, { body: 'Cancelar ticket' }],
+},
+(ctx,{endFlow}) =>{
+    if(ctx.body === 'Enviar ticket') {
+        sendEmail(ticket)
+        return endFlow({body: 'Ticket generado. Gracias por comunicarse con nosotros.'
+        })
+    }
+    else{
+        return endFlow({body: 'Se cancelo el envio del ticket',
+        buttons:[{body:'Inicio' }]
+        })
+    }
+})
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+const flujoPrincipal = addKeyword(['pepito'])
 .addAnswer(['Gracias por comunicarte con Sistema Siges.','En que podemos ayudarte ?'],
 {
     buttons: [{ body: 'Necesito un instructivo' }, { body: 'Necesito soporte' }],
+    capture: true
 },
-null,
-[flujoInstructivos,flujoSoporte])
+(ctx,{endFlow}) => {
+    if(ctx.body === 'Necesito un instructivo'){
+        return endFlow({body: 'Esta sección se encuentra en desarrollo',
+        buttons:[{body:'Inicio' }]
+        })
+    }
+    if(ctx.body !== 'Necesito soporte'){
+        return endFlow({body: '❌ Respuesta invalida ❌',
+        buttons:[{body:'Inicio' }]
+        })
+    }
+})
+.addAnswer(['Seleccione sobre que necesita soporte'],
+{
+    capture:true,
+    buttons: [{ body: 'Sistema SIGES' }, { body: 'Impresora fiscal' }, { body: 'Impresora común'}],
+},
+(ctx, {endFlow}) => {
+    if(ctx.body !== 'Sistema SIGES' && ctx.body !== 'Impresora fiscal' && ctx.body !== 'Impresora común' ) {
+        return endFlow({body: '❌ Respuesta invalida ❌',
+        buttons:[{body:'Inicio' }]
+        })
+    }
+    ticket.problem = ctx.body
+},
+[flujoSiges,flujoImpresoraFiscal,flujoImpresoraComun])
 
 const main = async () => {
     const adapterDB = new MockAdapter()
