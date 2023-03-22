@@ -1,0 +1,224 @@
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB098FF5E74F7E4602505',
+    participant: undefined
+  },
+  messageTimestamp: 1679512751,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'pepito',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'pepito',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0D2F8132E3914FBB69D',
+    participant: undefined
+  },
+  messageTimestamp: 1679512753,
+  pushName: 'Martín',
+  message: Message {
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    },
+    buttonsResponseMessage: ButtonsResponseMessage {
+      selectedButtonId: 'id-btn-1',
+      selectedDisplayText: 'Necesito soporte',
+      contextInfo: [ContextInfo],
+      type: 1
+    }
+  },
+  body: 'Necesito soporte',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB08BE79C2222B194D2B3',
+    participant: undefined
+  },
+  messageTimestamp: 1679512754,
+  pushName: 'Martín',
+  message: Message {
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    },
+    buttonsResponseMessage: ButtonsResponseMessage {
+      selectedButtonId: 'id-btn-0',
+      selectedDisplayText: 'Sistema SIGES',
+      contextInfo: [ContextInfo],
+      type: 1
+    }
+  },
+  body: 'Sistema SIGES',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB05E1E1D2342BDFB91DD',
+    participant: undefined
+  },
+  messageTimestamp: 1679512759,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'mgalara@gmail.com',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'mgalara@gmail.com',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB04C4C70B11D31EDF13B',
+    participant: undefined
+  },
+  messageTimestamp: 1679512761,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'asd',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'asd',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB07290DF42B4410A18C4',
+    participant: undefined
+  },
+  messageTimestamp: 1679512762,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'asd',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'asd',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0D3E3705C6F53D1E07B',
+    participant: undefined
+  },
+  messageTimestamp: 1679512764,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'asd',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'asd',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0BEBAC2D4F3022167EF',
+    participant: undefined
+  },
+  messageTimestamp: 1679512765,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'asd',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'asd',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB02A8EC04BA23C94A406',
+    participant: undefined
+  },
+  messageTimestamp: 1679512767,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'asd',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'asd',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB098F4921805F4A98F7D',
+    participant: undefined
+  },
+  messageTimestamp: 1679512769,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'asd',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'asd',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0A84F286AE2B9A5DE10',
+    participant: undefined
+  },
+  messageTimestamp: 1679512770,
+  pushName: 'Martín',
+  message: Message {
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    },
+    buttonsResponseMessage: ButtonsResponseMessage {
+      selectedButtonId: 'id-btn-0',
+      selectedDisplayText: 'Enviar ticket',
+      contextInfo: [ContextInfo],
+      type: 1
+    }
+  },
+  body: 'Enviar ticket',
+  from: '5493515924253'
+}

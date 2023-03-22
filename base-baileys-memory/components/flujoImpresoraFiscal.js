@@ -2,9 +2,8 @@ const { addKeyword } = require('@bot-whatsapp/bot')
 
 const {sendEmail} = require('./utils.js')
 const {validateUser} = require('./utils.js')
-const {addProps} = require('./utils.js')
 
-const flujoSiges = addKeyword('Sistema SIGES')
+const flujoImpresoraFiscal = addKeyword('Impresora fiscal')
 .addAnswer(['Para generar un ticket de soporte necesitamos validar la cuenta.','Por favor ingresa el correo electronico.'],
 {
     capture: true
@@ -22,7 +21,6 @@ async (ctx, {endFlow}) => {
         buttons:[{body:'Inicio' }]
         })
     }
-   
     addProps({email: email})
 })
 .addAnswer('Ingrese el domicilio',
@@ -53,7 +51,7 @@ async (ctx, {endFlow}) => {
 (ctx) => {
     addProps({passTV: ctx.body})
 })
-.addAnswer('Ingrese una descripcion del problema',
+.addAnswer(['Ingrese una descripcion del problema','Si necesita instalar una impresora fiscal','Indique marca/modelo | si se encuentra conectada y que tipo de conexion ( USB o UTP )'],
 {
     capture: true
 },
@@ -84,4 +82,4 @@ async (ctx, {endFlow}) => {
     }
 })
 
-module.exports = flujoSiges 
+module.exports = flujoImpresoraFiscal
