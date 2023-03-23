@@ -1,7 +1,8 @@
 const { addKeyword } = require('@bot-whatsapp/bot')
 
-const {sendEmail} = require('./utils.js')
+const {sendEmailImpComun} = require('./utils.js')
 const {validateUser} = require('./utils.js')
+const {addProps} = require('./utils.js')
 
 const flujoImpresoraComun = addKeyword('Impresora común')
 .addAnswer(['Para generar un ticket de soporte necesitamos validar la cuenta.','Por favor ingresa el correo electronico.'],
@@ -21,6 +22,7 @@ async (ctx, {endFlow}) => {
         buttons:[{body:'Inicio' }]
         })
     }
+   
     addProps({email: email})
 })
 .addAnswer('Ingrese el domicilio',
@@ -30,12 +32,12 @@ async (ctx, {endFlow}) => {
 (ctx) => {
     addProps({adress: ctx.body})
 })
-.addAnswer('Indique en que computadora desea instalarla / hay un problema',
+.addAnswer('Ingrese telefono de contacto',
 {
     capture: true
 },
 (ctx) => {
-    addProps({pf: ctx.body})
+    addProps({phone: ctx.body})
 })
 .addAnswer('Ingrese ID de TeamViewer',
 {
@@ -51,19 +53,41 @@ async (ctx, {endFlow}) => {
 (ctx) => {
     addProps({passTV: ctx.body})
 })
-.addAnswer(['Ingrese una descripcion del problema','Si necesita instalar una impresora','Indique marca/modelo | si se encuentra conectada'],
+.addAnswer('Seleccione la opcion deseada',{
+    buttons: [{body: 'Soporte para impresora'},{body: 'Instalar una impresora'}],
+    capture: true
+},
+(ctx) => {
+    addProps({type: ctx.body})
+})
+.addAnswer('Indique en que computadora se encuentra la impresora',
+{
+    capture: true
+},
+(ctx) => {
+    addProps({pf: ctx.body})
+})
+.addAnswer('Indique marca y modelo de la impresora',
+{
+    capture: true
+},
+(ctx) => {
+    addProps({model: ctx.body})
+})
+.addAnswer('La impresora se encuentra conectada ?',
+{
+    capture: true,
+    buttons: [{ body: 'SI' }, { body: 'NO' }],
+},
+(ctx) => {
+    addProps({connected: ctx.body})
+})
+.addAnswer('Si desea agregar mas información o alguna descripción lo puede hacer ahora',
 {
     capture: true
 },
 (ctx) => {
     addProps({description: ctx.body})
-})
-.addAnswer('Ingrese telefono de contacto',
-{
-    capture: true
-},
-(ctx) => {
-    addProps({phone: ctx.body})
 })
 .addAnswer(['Seleccione la opcion deseada'],{
     capture: true,
@@ -71,7 +95,7 @@ async (ctx, {endFlow}) => {
 },
 (ctx,{endFlow}) =>{
     if(ctx.body === 'Enviar ticket') {
-        sendEmail()
+        sendEmailImpComun()
         return endFlow({body: 'Ticket generado. Gracias por comunicarse con nosotros.'
         })
     }

@@ -1,6 +1,6 @@
 const { addKeyword } = require('@bot-whatsapp/bot')
 
-const {sendEmail} = require('./utils.js')
+const {sendEmailSiges} = require('./utils.js')
 const {validateUser} = require('./utils.js')
 const {addProps} = require('./utils.js')
 
@@ -32,12 +32,12 @@ async (ctx, {endFlow}) => {
 (ctx) => {
     addProps({adress: ctx.body})
 })
-.addAnswer('Indique punto de facturacion',
+.addAnswer('Ingrese telefono de contacto',
 {
     capture: true
 },
 (ctx) => {
-    addProps({pf: ctx.body})
+    addProps({phone: ctx.body})
 })
 .addAnswer('Ingrese ID de TeamViewer',
 {
@@ -53,6 +53,13 @@ async (ctx, {endFlow}) => {
 (ctx) => {
     addProps({passTV: ctx.body})
 })
+.addAnswer('Indique punto de facturacion',
+{
+    capture: true
+},
+(ctx) => {
+    addProps({pf: ctx.body})
+})
 .addAnswer('Ingrese una descripcion del problema',
 {
     capture: true
@@ -60,12 +67,19 @@ async (ctx, {endFlow}) => {
 (ctx) => {
     addProps({description: ctx.body})
 })
-.addAnswer('Ingrese telefono de contacto',
+.addAnswer(['Si desea enviar una foto aquí lo puede hacer.','De lo contrario seleccione el botón.'],
 {
-    capture: true
+    capture: true,
+    buttons: [{body: 'No adjuntar foto'}]
 },
 (ctx) => {
-    addProps({phone: ctx.body})
+    if(ctx.body === 'No adjuntar foto'){
+        addProps({media: ctx.body})
+    }
+    else{
+        addProps({media: ctx})
+    }
+    
 })
 .addAnswer(['Seleccione la opcion deseada'],{
     capture: true,
@@ -73,7 +87,7 @@ async (ctx, {endFlow}) => {
 },
 (ctx,{endFlow}) =>{
     if(ctx.body === 'Enviar ticket') {
-        sendEmail()
+        sendEmailSiges()
         return endFlow({body: 'Ticket generado. Gracias por comunicarse con nosotros.'
         })
     }
