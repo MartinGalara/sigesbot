@@ -4,26 +4,25 @@ const nodemailer = require("nodemailer")
 
 const dotenv = require("dotenv");
 
+const { downloadMediaMessage } = require('@adiwajshing/baileys')
+
 dotenv.config();
 
 let ticket = {}
 
-const fs = require('fs');
-
-async function downloadFile(directPath, fileName) {
-  const response = await axios({
-    method: 'get',
-    url: `https://mmg.whatsapp.net${directPath}`,
-    responseType: 'arraybuffer'
-  });
-  
-  fs.writeFileSync(fileName, response.data);
-  console.log('Archivo descargado con éxito');
-}
-
 const asdasd = async () => {
 
-    downloadFile(ticket.media.message.imageMessage.directPath,'asd.jpg')
+  let attachments = {}
+
+    if(ticket.media.message.hasOwnProperty('imageMessage')){
+      console.log("entre aca")
+      const buffer = await downloadMediaMessage(ticket.media,'buffer',{ },{ })
+
+      attachments = {
+        filename: 'adjunto.jpg',
+        content: Buffer.from(buffer, 'base64')
+      }
+    }
 
     let transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
@@ -40,6 +39,7 @@ const asdasd = async () => {
         to: `mgalara2@gmail.com`, // list of receivers
         subject: "Un cliente necesita soporte", // Subject line
         text: "Un cliente necesita soporte", // plain text body
+        attachments: [attachments],
         html: `
         <div>
         <p>Datos del ticket</p>
@@ -54,6 +54,8 @@ const sendEmailSiges = async () => {
 
     console.log(ticket)
 
+    const buffer = await downloadMediaMessage(ticket.media,'buffer',{ },{ })
+
     let transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 465,
@@ -69,6 +71,10 @@ const sendEmailSiges = async () => {
         to: `mgalara2@gmail.com`, // list of receivers
         subject: "Un cliente necesita soporte", // Subject line
         text: "Un cliente necesita soporte", // plain text body
+        attachments: [{
+          filename: 'adjunto.jpg',
+          content: Buffer.from(buffer, 'base64')
+        }],
         html: `
         <div>
         <p>Datos del ticket</p>
@@ -91,6 +97,8 @@ const sendEmailImpComun = async () => {
 
     console.log(ticket)
 
+    const buffer = await downloadMediaMessage(ticket.media,'buffer',{ },{ })
+
     let transporter = nodemailer.createTransport({
         host: "smtp.gmail.com",
         port: 465,
@@ -106,6 +114,10 @@ const sendEmailImpComun = async () => {
         to: `mgalara2@gmail.com`, // list of receivers
         subject: "Un cliente necesita soporte", // Subject line
         text: "Un cliente necesita soporte", // plain text body
+        attachments: [{
+          filename: 'adjunto.jpg',
+          content: Buffer.from(buffer, 'base64')
+        }],
         html: `
         <div>
         <p>Datos del ticket</p>
@@ -131,6 +143,8 @@ const sendEmailImpFiscal = async () => {
 
   console.log(ticket)
 
+  const buffer = await downloadMediaMessage(ticket.media,'buffer',{ },{ })
+
   let transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       port: 465,
@@ -146,6 +160,10 @@ const sendEmailImpFiscal = async () => {
       to: `mgalara2@gmail.com`, // list of receivers
       subject: "Un cliente necesita soporte", // Subject line
       text: "Un cliente necesita soporte", // plain text body
+      attachments: [{
+        filename: 'adjunto.jpg',
+        content: Buffer.from(buffer, 'base64')
+      }],
       html: `
       <div>
       <p>Datos del ticket</p>
