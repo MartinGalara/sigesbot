@@ -60,7 +60,7 @@ const asd = addKeyword(['asd'])
 
 const main = async () => {
     const adapterDB = new MockAdapter()
-    const adapterFlow = createFlow([asd])
+    const adapterFlow = createFlow([flujoPrincipal])
     const adapterProvider = createProvider(BaileysProvider)
 
     createBot({
