@@ -17,14 +17,14 @@ const sendEmail = async () => {
     port: 465,
     secure: true, // true for 465, false for other ports
     auth: {
-      user: "mgalara@gmail.com", // generated ethereal user
+      user: process.env.SENDER, // generated ethereal user
       pass: process.env.GMAIL_PASS, // generated ethereal password
     },
   });
 
   let data = {
-    from: '"Ticket" <mgalara@gmail.com>', // sender address
-    to: `mgalara2@gmail.com`, // list of receivers
+    from: `"Ticket" <${process.env.SENDER}>`, // sender address
+    to: process.env.RECIEVER, // list of receivers
     subject: "Un cliente necesita soporte", // Subject line
     text: "Un cliente necesita soporte", // plain text body
   }
