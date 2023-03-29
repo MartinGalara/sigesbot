@@ -86,7 +86,6 @@ const validateUser = async (id) => {
 
   const user = await axios(config)
 
-  console.log("asdasd")
   console.log(user.data)
 
   if(user.data.lenth !== 0){
