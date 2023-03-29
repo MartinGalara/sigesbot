@@ -78,30 +78,20 @@ const sendEmail = async () => {
 }
 
 const validateUser = async (id) => {
-    
-    if(id === "asd")
-    {
-        return {
-            id: "asd",
-            address: "asd123",
-            email: "asd123"
-        }
-    }
-    else{
-        return false
-    }
-    const config = {
-        method: 'get',
-        url: `http://localhost:3001/users?email=${email}`,
-    }
 
-    const user = await axios(config)
-    if(user.data.lenth !== 0){
-        return user.data[0]
-    }
-    else{
-        return false
-    }
+  const config = {
+    method: 'get',
+    url: `${process.env.SERVER_URL}/users?id=${id}`,
+}
+
+  const user = await axios(config)
+
+  if(user.data.lenth !== 0){
+    return user.data[0]
+  }
+  else{
+    return false
+  }
 }
 
 const addProps = (props) => {
