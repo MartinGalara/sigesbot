@@ -12,6 +12,8 @@ let ticket = {}
 
 const sendEmail = async () => {
 
+  const newTicket = await createTicket(ticket.id)
+
   let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
@@ -23,10 +25,10 @@ const sendEmail = async () => {
   });
 
   let data = {
-    from: `"Ticket" <${process.env.SENDER}>`, // sender address
+    from: `"WT ${newTicket.id}" <${process.env.SENDER}>`, // sender address
     to: process.env.RECIEVER, // list of receivers
-    subject: "Un cliente necesita soporte", // Subject line
-    text: "Un cliente necesita soporte", // plain text body
+    subject: `${newTicket.userId} necesita soporte`, // Subject line
+    text: `${newTicket.userId} necesita soporte`, // plain text body
   }
 
   if(typeof ticket.media === "object" && ticket.media.message.hasOwnProperty('imageMessage')){
@@ -73,7 +75,9 @@ const sendEmail = async () => {
     `
   }
 
-  await transporter.sendMail(data);
+  const resultado = await transporter.sendMail(data);
+
+  //console.log(resultado)
 
 }
 
@@ -96,6 +100,22 @@ const validateUser = async (id) => {
 
 const addProps = (props) => {
     Object.assign(ticket, props);
+}
+
+const createTicket = async (userId) => {
+
+  const config = {
+    method: 'post',
+    url: `${process.env.SERVER_URL}/tickets`,
+    data:{
+      userId: userId
+    }
+  }
+
+  const ticket = await axios(config)
+
+  return ticket.data
+
 }
 
 module.exports = {sendEmail,validateUser,addProps}
