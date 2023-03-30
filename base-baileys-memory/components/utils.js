@@ -75,9 +75,9 @@ const sendEmail = async () => {
     `
   }
 
-  const resultado = await transporter.sendMail(data);
+  const mail = await transporter.sendMail(data);
 
-  //console.log(resultado)
+  //console.log(mail)
 
 }
 
