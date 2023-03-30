@@ -19,33 +19,7 @@ async (ctx, {endFlow}) => {
     }
    
     addProps({id: id})
-})
-.addAnswer(['Ingresa un correo electronico.'],
-{
-    capture: true
-},
-async (ctx, {endFlow}) => {
-    if(!ctx.body.includes('@')) {
-        return endFlow({body: '❌ Correo invalido ❌',
-        buttons:[{body:'Inicio' }]
-        })
-    }
-   
-    addProps({email: ctx.body})
-})
-.addAnswer('Ingrese el domicilio',
-{
-    capture: true
-},
-(ctx) => {
-    addProps({address: ctx.body})
-})
-.addAnswer('Ingrese telefono de contacto',
-{
-    capture: true
-},
-(ctx) => {
-    addProps({phone: ctx.body})
+    addProps({phone: ctx.from})
 })
 .addAnswer('Indique punto de facturacion',
 {

@@ -12,6 +12,8 @@ let ticket = {}
 
 const sendEmail = async () => {
 
+  console.log(ticket)
+
   const newTicket = await createTicket(ticket.id)
 
   let transporter = nodemailer.createTransport({
@@ -48,7 +50,7 @@ const sendEmail = async () => {
     <p>Soporte para: ${ticket.problem}</p>
     <p>ID Cliente: ${ticket.id}</p>
     <p>Correo: ${ticket.email}</p>
-    <p>Dirección: ${ticket.address}</p>
+    <p>Dirección: ${ticket.info}</p>
     <p>Teléfono de contacto: ${ticket.phone}</p>
     <p>Punto de facturación / PC: ${ticket.pf}</p>
     <p>Descripción del problema: ${ticket.description}</p>
@@ -63,7 +65,7 @@ const sendEmail = async () => {
     <p>Soporte para: ${ticket.problem}</p>
     <p>ID Cliente: ${ticket.id}</p>
     <p>Correo: ${ticket.email}</p>
-    <p>Dirección: ${ticket.address}</p>
+    <p>Dirección: ${ticket.info}</p>
     <p>Teléfono de contacto: ${ticket.phone}</p>
     <p>Solicitud: ${ticket.type}</p>
     <p>Punto de facturación / PC: ${ticket.pf}</p>
@@ -91,6 +93,8 @@ const validateUser = async (id) => {
   const user = await axios(config)
 
   if(user.data.lenth !== 0){
+    ticket.email = user.data[0].email
+    ticket.info = user.data[0].info
     return user.data[0]
   }
   else{
