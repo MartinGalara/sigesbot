@@ -29,8 +29,8 @@ const sendEmail = async () => {
   let data = {
     from: `"WT ${newTicket.id}" <${process.env.SENDER}>`, // sender address
     to: process.env.RECIEVER, // list of receivers
-    subject: `${newTicket.userId} necesita soporte`, // Subject line
-    text: `${newTicket.userId} necesita soporte`, // plain text body
+    subject: `${newTicket.userId} necesita soporte para ${ticket.problem}`, // Subject line
+    text: `${newTicket.userId} necesita soporte para ${ticket.problem}`, // plain text body
   }
 
   if(typeof ticket.media === "object" && ticket.media.message.hasOwnProperty('imageMessage')){
