@@ -12,8 +12,6 @@ let ticket = {}
 
 const sendEmail = async () => {
 
-  console.log(ticket)
-
   const newTicket = await createTicket(ticket.id)
 
   let transporter = nodemailer.createTransport({
@@ -29,8 +27,8 @@ const sendEmail = async () => {
   let data = {
     from: `"WT ${newTicket.id}" <${process.env.SENDER}>`, // sender address
     to: process.env.RECIEVER, // list of receivers
-    subject: `${newTicket.userId} necesita soporte para ${ticket.problem}`, // Subject line
-    text: `${newTicket.userId} necesita soporte para ${ticket.problem}`, // plain text body
+    subject: `${ticket.info} necesita soporte para ${ticket.problem}`, // Subject line
+    text: `${ticket.info} necesita soporte para ${ticket.problem}`, // plain text body
   }
 
   if(typeof ticket.media === "object" && ticket.media.message.hasOwnProperty('imageMessage')){
@@ -49,10 +47,11 @@ const sendEmail = async () => {
     <p>Datos del ticket</p>
     <p>Soporte para: ${ticket.problem}</p>
     <p>ID Cliente: ${ticket.id}</p>
+    <p>Info Cliente: ${ticket.info}</p>
     <p>Correo: ${ticket.email}</p>
-    <p>Dirección: ${ticket.info}</p>
-    <p>Teléfono de contacto: ${ticket.phone}</p>
+    <p>Teléfono que genero el ticket: ${ticket.phone}</p>
     <p>Punto de facturación / PC: ${ticket.pf}</p>
+    <p>ID TeamViewer: ${ticket.tv}</p>
     <p>Descripción del problema: ${ticket.description}</p>
     <br></br>
     </div>
@@ -64,11 +63,12 @@ const sendEmail = async () => {
     <p>Datos del ticket</p>
     <p>Soporte para: ${ticket.problem}</p>
     <p>ID Cliente: ${ticket.id}</p>
+    <p>Info Cliente: ${ticket.info}</p>
     <p>Correo: ${ticket.email}</p>
-    <p>Dirección: ${ticket.info}</p>
-    <p>Teléfono de contacto: ${ticket.phone}</p>
+    <p>Teléfono que genero el ticket: ${ticket.phone}</p>
     <p>Solicitud: ${ticket.type}</p>
     <p>Punto de facturación / PC: ${ticket.pf}</p>
+    <p>ID TeamViewer: ${ticket.tv}</p>
     <p>Marca / Modelo: ${ticket.model}</p>
     <p>Se encuentra conectada / Tipo de conexión: ${ticket.connected}</p>
     <p>Descripción / Info adicional: ${ticket.description}</p>
@@ -78,6 +78,8 @@ const sendEmail = async () => {
   }
 
   const mail = await transporter.sendMail(data);
+
+  return newTicket.id
 
   //console.log(mail)
 
@@ -122,4 +124,50 @@ const createTicket = async (userId) => {
 
 }
 
-module.exports = {sendEmail,validateUser,addProps}
+const computers = async (userId) => {
+  
+  const config = {
+    method: 'get',
+    url: `${process.env.SERVER_URL}/computers?userId=${userId}`,
+  }
+
+  const computers = await axios(config).then((i) => i.data)
+
+  ticket.computers = []
+  computers.map( e=> {
+    ticket.computers.push(e)
+  })
+
+}
+
+const computerOptions = async () => {
+
+  const array = []
+
+  let i = 1;
+
+  ticket.computers.map(e => {
+    array.push({
+      body: `${i} - ${e.alias}`
+    })
+    i++;
+  })
+
+  return array;
+
+}
+
+const computerInfo = (option) => {
+
+  if(ticket.computers[option-1] && option !== "0"){
+    ticket.pf = ticket.computers[option-1].alias
+    ticket.tv = ticket.computers[option-1].teamviewer_id
+  }
+  else{
+    console.log("entre aca")
+  }
+
+}
+
+
+module.exports = {sendEmail,validateUser,addProps,computers,computerOptions,computerInfo}

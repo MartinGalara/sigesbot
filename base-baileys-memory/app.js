@@ -14,7 +14,7 @@ const {asdasd,addProps} = require('./components/utils.js')
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const flujoPrincipal = addKeyword(['pepito'])
+const flujoPrincipal = addKeyword(['Inicio'])
 .addAnswer(['Gracias por comunicarte con Sistema Siges.','En que podemos ayudarte ?'],
 {
     buttons: [{ body: 'Necesito un instructivo' }, { body: 'Necesito soporte' }],

@@ -3,13 +3,16 @@ const { addKeyword } = require('@bot-whatsapp/bot')
 const {sendEmail} = require('./utils.js')
 const {validateUser} = require('./utils.js')
 const {addProps} = require('./utils.js')
+const {computers} = require('./utils.js')
+const {computerOptions} = require('./utils.js')
+const {computerInfo} = require('./utils.js')
 
 const flujoSiges = addKeyword('Sistema SIGES')
 .addAnswer(['Para generar un ticket de soporte necesitamos validar la cuenta.','Por favor ingresa el codigo de cliente.'],
 {
     capture: true
 },
-async (ctx, {endFlow}) => {
+async (ctx, {flowDynamic,endFlow}) => {
     let id = ctx.body
     const user = await validateUser(id)
     if(!user){
@@ -20,13 +23,19 @@ async (ctx, {endFlow}) => {
    
     addProps({id: id})
     addProps({phone: ctx.from})
+    await computers(id)
+    const pcs = await computerOptions();
+    setTimeout(()=> {
+        flowDynamic(pcs)
+    },500)
+    
 })
-.addAnswer('Indique punto de facturacion',
+.addAnswer(['Indique el numero de la opcion que corresponda a la computadora que necesita soporte','Si ninguna es correcta coloque el numero 0'],
 {
     capture: true
 },
 (ctx) => {
-    addProps({pf: ctx.body})
+    computerInfo(ctx.body)
 })
 .addAnswer('Ingrese una descripcion del problema',
 {
@@ -53,10 +62,10 @@ async (ctx, {endFlow}) => {
     capture: true,
     buttons: [{ body: 'Enviar ticket' }, { body: 'Cancelar ticket' }],
 },
-(ctx,{endFlow}) =>{
+async (ctx,{endFlow}) =>{
     if(ctx.body === 'Enviar ticket') {
-        sendEmail()
-        return endFlow({body: 'Ticket generado. Gracias por comunicarse con nosotros.'
+        const ticket = await sendEmail()
+        return endFlow({body: `Tu numero de ticket es ${ticket}. Gracias por comunicarse con nosotros.`
         })
     }
     else{

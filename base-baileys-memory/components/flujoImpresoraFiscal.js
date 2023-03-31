@@ -76,10 +76,10 @@ async (ctx, {endFlow}) => {
     capture: true,
     buttons: [{ body: 'Enviar ticket' }, { body: 'Cancelar ticket' }],
 },
-(ctx,{endFlow}) =>{
+async (ctx,{endFlow}) =>{
     if(ctx.body === 'Enviar ticket') {
-        sendEmail()
-        return endFlow({body: 'Ticket generado. Gracias por comunicarse con nosotros.'
+        const ticket = await sendEmail()
+        return endFlow({body: `Tu numero de ticket es ${ticket}. Gracias por comunicarse con nosotros.`
         })
     }
     else{
