@@ -10,6 +10,8 @@ dotenv.config();
 
 let ticket = {}
 
+let mailAttachments = []
+
 const sendEmail = async () => {
 
   const newTicket = await createTicket(ticket.id)
@@ -27,18 +29,12 @@ const sendEmail = async () => {
   let data = {
     from: `"WT ${newTicket.id}" <${process.env.SENDER}>`, // sender address
     to: process.env.RECIEVER, // list of receivers
-    subject: `${ticket.info} necesita soporte para ${ticket.problem}`, // Subject line
-    text: `${ticket.info} necesita soporte para ${ticket.problem}`, // plain text body
+    subject: `${ticket.info} | Soporte para ${ticket.problem} | ${ticket.pf}`, // Subject line
+    text: `${ticket.info} | Soporte para ${ticket.problem} | ${ticket.pf}`, // plain text body
   }
 
-  if(typeof ticket.media === "object" && ticket.media.message.hasOwnProperty('imageMessage')){
-    const buffer = await downloadMediaMessage(ticket.media,'buffer',{ },{ })
-
-    const image = {
-      filename: 'adjunto.jpg',
-      content: Buffer.from(buffer, 'base64')
-    }
-    data.attachments = [image]
+  if(mailAttachments.length !== 0){
+    data.attachments = mailAttachments;
   }
 
   if(ticket.problem === "Sistema SIGES"){
@@ -169,5 +165,28 @@ const computerInfo = (option) => {
 
 }
 
+const addAudio = async (ctx) => {
 
-module.exports = {sendEmail,validateUser,addProps,computers,computerOptions,computerInfo}
+  const buffer = await downloadMediaMessage(ctx,'buffer')
+
+  const audio = {
+    filename: 'adjunto.mp3',
+    content: Buffer.from(buffer, 'base64')
+  }
+  mailAttachments.push(audio)
+
+}
+
+const addImage = async (ctx) => {
+
+  const buffer = await downloadMediaMessage(ctx,'buffer')
+
+    const image = {
+      filename: 'adjunto.jpg',
+      content: Buffer.from(buffer, 'base64')
+    }
+    mailAttachments.push(image)
+}
+
+
+module.exports = {sendEmail,validateUser,addProps,computers,computerOptions,computerInfo,addAudio,addImage}

@@ -6,6 +6,8 @@ const {addProps} = require('./utils.js')
 const {computers} = require('./utils.js')
 const {computerOptions} = require('./utils.js')
 const {computerInfo} = require('./utils.js')
+const {addAudio} = require('./utils.js')
+const {addImage} = require('./utils.js')
 
 const flujoSiges = addKeyword('Sistema SIGES')
 .addAnswer(['Para generar un ticket de soporte necesitamos validar la cuenta.','Por favor ingresa el codigo de cliente.'],
@@ -37,12 +39,18 @@ async (ctx, {flowDynamic,endFlow}) => {
 (ctx) => {
     computerInfo(ctx.body)
 })
-.addAnswer('Ingrese una descripcion del problema',
+.addAnswer('Describa el problema por escrito o adjunte un AUDIO',
 {
     capture: true
 },
 (ctx) => {
-    addProps({description: ctx.body})
+    if(ctx.message.hasOwnProperty('audioMessage')){
+        addAudio(ctx)
+        addProps({description: "Audio adjuntado"})
+    }else{
+        addProps({description: ctx.body})
+    }
+    
 })
 .addAnswer(['Si desea enviar una foto aquí lo puede hacer.','De lo contrario seleccione el botón.'],
 {
@@ -50,11 +58,8 @@ async (ctx, {flowDynamic,endFlow}) => {
     buttons: [{body: 'No adjuntar foto'}]
 },
 (ctx) => {
-    if(ctx.body === 'No adjuntar foto'){
-        addProps({media: ctx.body})
-    }
-    else{
-        addProps({media: ctx})
+    if(ctx.message.hasOwnProperty('imageMessage')){
+        addImage(ctx)
     }
     
 })
