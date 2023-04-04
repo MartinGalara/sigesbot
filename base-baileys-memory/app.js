@@ -12,6 +12,12 @@ const flujoImpresoraComun = require('./components/flujoImpresoraComun.js')
 
 const {asdasd,addProps} = require('./components/utils.js')
 
+const {useMultiFileAuthState} = require('@adiwajshing/baileys')
+
+const makeWASocket = require('@adiwajshing/baileys')
+
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const flujoPrincipal = addKeyword(['Inicio'])
@@ -67,9 +73,16 @@ const main = async () => {
         flow: adapterFlow,
         provider: adapterProvider,
         database: adapterDB,
-    })
+    })  
 
     QRPortalWeb()
+
+    const { state, saveCreds } = await useMultiFileAuthState('auth_info_baileys')
+
+    const conn = makeWASocket.makeWALegacySocket({ auth: state })
+
+    conn.ev.on ('creds.update', saveCreds)
+
 }
 
 main()

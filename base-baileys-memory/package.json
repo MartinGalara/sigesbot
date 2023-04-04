@@ -9,15 +9,16 @@
     },
     "keywords": [],
     "dependencies": {
-        "@adiwajshing/baileys": "4.4.0",
+        "@adiwajshing/baileys": "^4.4.0",
         "@bot-whatsapp/bot": "latest",
         "@bot-whatsapp/cli": "latest",
         "@bot-whatsapp/database": "latest",
         "@bot-whatsapp/portal": "latest",
-        "@bot-whatsapp/provider": "latest",
+        "@bot-whatsapp/provider": "^0.1.25",
         "axios": "^1.1.2",
         "dotenv": "^8.2.0",
         "nodemailer": "^6.9.1",
+        "puppeteer": "^19.8.3",
         "wa-sticker-formatter": "4.3.2",
         "whatsapp-web": "^1.0.3",
         "whatsapp-web.js": "^1.19.5"
