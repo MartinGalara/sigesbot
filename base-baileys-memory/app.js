@@ -83,6 +83,8 @@ const main = async () => {
 
     conn.ev.on ('creds.update', saveCreds)
 
+    console.log("entre")
+
 }
 
 main()
