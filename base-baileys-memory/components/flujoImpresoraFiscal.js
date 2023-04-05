@@ -35,8 +35,16 @@ async (ctx, {endFlow,flowDynamic}) => {
 {
     capture: true
 },
-(ctx) => {
-    computerInfo(ctx.body)
+async (ctx) => {
+    const pcs = await computerOptions();
+    if(ctx.body > 0 && ctx.body <= pcs.length){
+        computerInfo(ctx.body)
+    }
+    else{
+        if(ctx.body === "0") addProps({pf: "PC no esta en nuestra base de datos"})
+        else addProps({pf: ctx.body})
+        addProps({tv: "Consultar al cliente tv e indentificador de PC y reportarlo"})
+    }
 })
 .addAnswer('Seleccione la opcion deseada',{
     buttons: [{body: 'Soporte para impresora fiscal'},{body: 'Instalar una impresora fiscal'}],
@@ -66,23 +74,34 @@ async (ctx, {endFlow,flowDynamic}) => {
     capture: true,
     buttons:[{body: "No agregar información"}]
 },
-(ctx) => {
+(ctx,{fallBack,flowDynamic}) => {
     if(ctx.message.hasOwnProperty('audioMessage')){
         addAudio(ctx)
         addProps({description: "Audio adjuntado"})
-    }else{
+    }else if(ctx.message.hasOwnProperty('conversation') || ctx.message.hasOwnProperty('buttonsResponseMessage')){
         addProps({description: ctx.body})
     }
+    else{
+       flowDynamic([{body: "Este campo admite solo audio o texto"},{body:'Escriba algo o envie un AUDIO' }])
+       return fallBack()
+    }
+    
 })
 .addAnswer(['Si desea enviar una foto aquí lo puede hacer.','De lo contrario seleccione el botón.'],
 {
     capture: true,
     buttons: [{body: 'No adjuntar foto'}]
 },
-(ctx) => {
+(ctx,{fallBack,flowDynamic}) => {
     if(ctx.message.hasOwnProperty('imageMessage')){
         addImage(ctx)
+    }else if (ctx.message.hasOwnProperty('conversation') || ctx.message.hasOwnProperty('buttonsResponseMessage')){
+        // descartamos que sea texto
+    }else{
+       flowDynamic([{body: "Este campo admite solo imagen o texto"}])
+       return fallBack()
     }
+    
 })
 .addAnswer(['Seleccione la opcion deseada'],{
     capture: true,

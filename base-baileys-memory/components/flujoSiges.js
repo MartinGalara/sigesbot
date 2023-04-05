@@ -36,19 +36,42 @@ async (ctx, {flowDynamic,endFlow}) => {
 {
     capture: true
 },
-(ctx) => {
-    computerInfo(ctx.body)
+async (ctx) => {
+    const pcs = await computerOptions();
+    if(ctx.body > 0 && ctx.body <= pcs.length){
+        computerInfo(ctx.body)
+    }
+    else{
+        if(ctx.body === "0") addProps({pf: "PC no esta en nuestra base de datos"})
+        else addProps({pf: ctx.body})
+        addProps({tv: "Consultar al cliente tv e indentificador de PC y reportarlo"})
+    }
+})
+.addAnswer('Indique el origen del problema',
+{
+    capture: true,
+    buttons:[{body:"Facturación"},{body:"Cierre de turno"},{body:"Informes"},{body:"Otro"}]
+},
+(ctx,{flowDynamic}) => {
+    if(ctx.body === "Informes"){
+        flowDynamic([{body:"En la siguiente seccion indicar en que tipo de informe ocurre el problema"}])
+    }
+    addProps({type: ctx.body}) 
 })
 .addAnswer('Describa el problema por escrito o adjunte un AUDIO',
 {
     capture: true
 },
-(ctx) => {
+(ctx,{fallBack,flowDynamic}) => {
     if(ctx.message.hasOwnProperty('audioMessage')){
         addAudio(ctx)
         addProps({description: "Audio adjuntado"})
-    }else{
+    }else if(ctx.message.hasOwnProperty('conversation') || ctx.message.hasOwnProperty('buttonsResponseMessage')){
         addProps({description: ctx.body})
+    }
+    else{
+       flowDynamic([{body: "Este campo admite solo audio o texto"},{body:'Describa el problema por escrito o adjunte un AUDIO' }])
+       return fallBack()
     }
     
 })
@@ -57,9 +80,14 @@ async (ctx, {flowDynamic,endFlow}) => {
     capture: true,
     buttons: [{body: 'No adjuntar foto'}]
 },
-(ctx) => {
+(ctx,{fallBack,flowDynamic}) => {
     if(ctx.message.hasOwnProperty('imageMessage')){
         addImage(ctx)
+    }else if (ctx.message.hasOwnProperty('conversation') || ctx.message.hasOwnProperty('buttonsResponseMessage')){
+        // descartamos que sea texto
+    }else{
+       flowDynamic([{body: "Este campo admite solo imagen o texto"}])
+       return fallBack()
     }
     
 })

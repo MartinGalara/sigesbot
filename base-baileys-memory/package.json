@@ -18,7 +18,7 @@
         "axios": "^1.1.2",
         "dotenv": "^8.2.0",
         "nodemailer": "^6.9.1",
-        "puppeteer": "^19.8.3",
+        "puppeteer": "^19.4.3",
         "wa-sticker-formatter": "4.3.2",
         "whatsapp-web": "^1.0.3",
         "whatsapp-web.js": "^1.19.5"

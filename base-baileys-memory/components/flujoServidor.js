@@ -9,12 +9,12 @@ const {computerInfo} = require('./utils.js')
 const {addAudio} = require('./utils.js')
 const {addImage} = require('./utils.js')
 
-const flujoImpresoraComun = addKeyword('Impresora común')
+const flujoServidor = addKeyword('Servidor')
 .addAnswer(['Para generar un ticket de soporte necesitamos validar la cuenta.','Por favor ingresa el codigo de cliente.'],
 {
     capture: true
 },
-async (ctx, {endFlow,flowDynamic}) => {
+async (ctx, {flowDynamic,endFlow}) => {
     let id = ctx.body
     const user = await validateUser(id)
     if(!user){
@@ -30,8 +30,9 @@ async (ctx, {endFlow,flowDynamic}) => {
     setTimeout(()=> {
         flowDynamic(pcs)
     },500)
+    
 })
-.addAnswer(['Indique el numero de la opcion que corresponda a la computadora donde se encuentra la impresora','Si ninguna es correcta coloque el numero 0'],
+.addAnswer(['Indique el numero de la opcion que corresponda a la computadora que necesita soporte','Si ninguna es correcta coloque el numero 0'],
 {
     capture: true
 },
@@ -46,32 +47,9 @@ async (ctx) => {
         addProps({tv: "Consultar al cliente tv e indentificador de PC y reportarlo"})
     }
 })
-.addAnswer('Seleccione la opcion deseada',{
-    buttons: [{body: 'Soporte para impresora'},{body: 'Instalar una impresora'}],
-    capture: true
-},
-(ctx) => {
-    addProps({type: ctx.body})
-})
-.addAnswer('Indique marca y modelo de la impresora',
+.addAnswer('Describa el problema por escrito o adjunte un AUDIO',
 {
     capture: true
-},
-(ctx) => {
-    addProps({model: ctx.body})
-})
-.addAnswer('La impresora se encuentra conectada ?',
-{
-    capture: true,
-    buttons: [{ body: 'SI' }, { body: 'NO' }],
-},
-(ctx) => {
-    addProps({connected: ctx.body})
-})
-.addAnswer(['Si desea agregar mas información o alguna descripción lo puede hacer ahora','Escriba algo o envie un AUDIO'],
-{
-    capture: true,
-    buttons:[{body: "No agregar información"}]
 },
 (ctx,{fallBack,flowDynamic}) => {
     if(ctx.message.hasOwnProperty('audioMessage')){
@@ -81,7 +59,7 @@ async (ctx) => {
         addProps({description: ctx.body})
     }
     else{
-       flowDynamic([{body: "Este campo admite solo audio o texto"},{body:'Escriba algo o envie un AUDIO' }])
+       flowDynamic([{body: "Este campo admite solo audio o texto"},{body:'Describa el problema por escrito o adjunte un AUDIO' }])
        return fallBack()
     }
     
@@ -119,4 +97,4 @@ async (ctx,{endFlow}) =>{
     }
 })
 
-module.exports = flujoImpresoraComun
+module.exports = flujoServidor

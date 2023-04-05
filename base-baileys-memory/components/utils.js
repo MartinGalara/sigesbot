@@ -1,10 +1,8 @@
 const axios = require('axios')
-
 const nodemailer = require("nodemailer")
-
 const dotenv = require("dotenv");
-
 const { downloadMediaMessage } = require('@adiwajshing/baileys')
+const makeWASocket = require('@adiwajshing/baileys')
 
 dotenv.config();
 
@@ -37,7 +35,7 @@ const sendEmail = async () => {
     data.attachments = mailAttachments;
   }
 
-  if(ticket.problem === "Sistema SIGES"){
+  if(ticket.problem === "Sistema SIGES" || ticket.problem === 'Aplicaciones'){
     data.html = `
     <div>
     <p>Datos del ticket</p>
@@ -48,10 +46,28 @@ const sendEmail = async () => {
     <p>Teléfono que genero el ticket: ${ticket.phone}</p>
     <p>Punto de facturación / PC: ${ticket.pf}</p>
     <p>ID TeamViewer: ${ticket.tv}</p>
+    <p>Origen del problema: ${ticket.type}</p>
     <p>Descripción del problema: ${ticket.description}</p>
     <br></br>
     </div>
     ` // html body
+  }else if(ticket.problem === "Libro IVA Compra / Venta"){
+    data.html = `
+    <div>
+    <p>Datos del ticket</p>
+    <p>Soporte para: ${ticket.problem}</p>
+    <p>ID Cliente: ${ticket.id}</p>
+    <p>Info Cliente: ${ticket.info}</p>
+    <p>Correo: ${ticket.email}</p>
+    <p>Teléfono que genero el ticket: ${ticket.phone}</p>
+    <p>Solicitud: ${ticket.type}</p>
+    <p>Período: ${ticket.timeFrame}</p>
+    <p>Punto de facturación / PC: ${ticket.pf}</p>
+    <p>ID TeamViewer: ${ticket.tv}</p>
+    <p>Descripción / Info adicional: ${ticket.description}</p>
+    <br></br>
+    </div>
+    `
   }
   else{
     data.html = `
@@ -90,7 +106,7 @@ const validateUser = async (id) => {
 
   const user = await axios(config)
 
-  if(user.data.lenth !== 0){
+  if(user.data.length !== 0){
     ticket.email = user.data[0].email
     ticket.info = user.data[0].info
     return user.data[0]
@@ -188,5 +204,11 @@ const addImage = async (ctx) => {
     mailAttachments.push(image)
 }
 
+const deleteTicketData = () => {
 
-module.exports = {sendEmail,validateUser,addProps,computers,computerOptions,computerInfo,addAudio,addImage}
+  mailAttachments = []
+
+}
+
+
+module.exports = {sendEmail,validateUser,addProps,computers,computerOptions,computerInfo,addAudio,addImage,deleteTicketData}
