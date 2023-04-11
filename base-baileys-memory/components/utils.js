@@ -35,7 +35,22 @@ const sendEmail = async () => {
     data.attachments = mailAttachments;
   }
 
-  if(ticket.problem === "Sistema SIGES" || ticket.problem === 'Aplicaciones'){
+  if(ticket.problem === "Despachos CEO" || ticket.problem === 'Servidor'){
+    data.html = `
+    <div>
+    <p>Datos del ticket</p>
+    <p>Soporte para: ${ticket.problem}</p>
+    <p>ID Cliente: ${ticket.id}</p>
+    <p>Info Cliente: ${ticket.info}</p>
+    <p>Correo: ${ticket.email}</p>
+    <p>Teléfono que genero el ticket: ${ticket.phone}</p>
+    <p>Punto de facturación / PC: ${ticket.pf}</p>
+    <p>ID TeamViewer: ${ticket.tv}</p>
+    <p>Descripción del problema: ${ticket.description}</p>
+    <br></br>
+    </div>
+    ` // html body
+  }else if(ticket.problem === "Sistema SIGES" || ticket.problem === 'Aplicaciones'){
     data.html = `
     <div>
     <p>Datos del ticket</p>
@@ -51,7 +66,7 @@ const sendEmail = async () => {
     <br></br>
     </div>
     ` // html body
-  }else if(ticket.problem === "Libro IVA Compra / Venta"){
+  }else if(ticket.problem === "Libro IVA"){
     data.html = `
     <div>
     <p>Datos del ticket</p>
@@ -132,7 +147,7 @@ const createTicket = async (userId) => {
 
   const ticket = await axios(config)
 
-  return ticket.data
+  return ticket.data 
 
 }
 
@@ -211,4 +226,13 @@ const deleteTicketData = () => {
 }
 
 
-module.exports = {sendEmail,validateUser,addProps,computers,computerOptions,computerInfo,addAudio,addImage,deleteTicketData}
+const sendMessage = async (adapterProvider) => {
+
+  var number = '5493515924253@s.whatsapp.net'
+  var message = "asd"
+  await adapterProvider.sendText(`${number}@c.us`,message)
+
+}
+
+
+module.exports = {sendEmail,validateUser,addProps,computers,computerOptions,computerInfo,addAudio,addImage,deleteTicketData,sendMessage}

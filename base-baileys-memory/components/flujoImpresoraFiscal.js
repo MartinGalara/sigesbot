@@ -9,7 +9,7 @@ const {computerInfo} = require('./utils.js')
 const {addAudio} = require('./utils.js')
 const {addImage} = require('./utils.js')
 
-const flujoImpresoraFiscal = addKeyword('Impresora fiscal')
+/* const flujoImpresoraFiscal = addKeyword('Impresora fiscal')
 .addAnswer(['Para generar un ticket de soporte necesitamos validar la cuenta.','Por favor ingresa el codigo de cliente.'],
 {
     capture: true
@@ -20,6 +20,27 @@ async (ctx, {endFlow,flowDynamic}) => {
     if(!user){
         return endFlow({body: '❌ ID invalido ❌',
         buttons:[{body:'Inicio' }]
+        })
+    }
+   
+    addProps({id: id})
+    addProps({phone: ctx.from})
+    await computers(id)
+    const pcs = await computerOptions();
+    setTimeout(()=> {
+        flowDynamic(pcs)
+    },500)
+}) */
+const flujoImpresoraFiscal = addKeyword('2')
+.addAnswer(['Para generar un ticket de soporte necesitamos validar la cuenta.','Por favor ingresa el codigo de cliente.'],
+{
+    capture: true
+},
+async (ctx, {endFlow,flowDynamic}) => {
+    let id = ctx.body
+    const user = await validateUser(id)
+    if(!user){
+        return endFlow({body: '❌ ID invalido ❌ Escriba "Inicio" para volver a comenzar'
         })
     }
    
@@ -46,14 +67,27 @@ async (ctx) => {
         addProps({tv: "Consultar al cliente tv e indentificador de PC y reportarlo"})
     }
 })
-.addAnswer('Seleccione la opcion deseada',{
+/* .addAnswer('Seleccione la opcion deseada',{
     buttons: [{body: 'Soporte para impresora fiscal'},{body: 'Instalar una impresora fiscal'}],
     capture: true
 },
 (ctx) => {
     addProps({type: ctx.body})
+}) */
+.addAnswer(['Seleccione la opcion deseada','1. Soporte para impresora fiscal','2. Instalar una impresora fiscal'],{
+    capture: true
+},
+(ctx) => {
+    switch (ctx.body) {
+        case "1":
+            ctx.body = "Soporte para impresora fiscal"
+            break;
+        case "2":
+            ctx.body = "Instalar una impresora fiscal"
+            break;
+    }
+    addProps({type: ctx.body})
 })
-
 .addAnswer('Indique marca y modelo de la impresora',
 {
     capture: true
@@ -61,15 +95,33 @@ async (ctx) => {
 (ctx) => {
     addProps({model: ctx.body})
 })
-.addAnswer('La impresora se encuentra conectada ? Con que tipo de cable ?',
+/* .addAnswer('La impresora se encuentra conectada ? Con que tipo de cable ?',
 {
     capture: true,
     buttons: [{ body: 'SI con cable UTP' }, { body: 'SI con cable USB' }, { body: 'No se encuentra conectada' }],
 },
 (ctx) => {
     addProps({connected: ctx.body})
+}) */
+.addAnswer(['La impresora se encuentra conectada ? Con que tipo de cable ?','1. SI con cable UTP','2. SI con cable USB','3. No se encuentra conectada'],
+{
+    capture: true
+},
+(ctx) => {
+    switch (ctx.body) {
+        case "1":
+            ctx.body = "SI con cable UTP"
+            break;
+        case "2":
+            ctx.body = "SI con cable USB"
+            break;
+        case "3":
+            ctx.body = "No se encuentra conectada"
+            break;
+    }
+    addProps({connected: ctx.body})
 })
-.addAnswer(['Si desea agregar mas información o alguna descripción lo puede hacer ahora','Escriba algo o envie un AUDIO'],
+/* .addAnswer(['Si desea agregar mas información o alguna descripción lo puede hacer ahora','Escriba algo o envie un AUDIO'],
 {
     capture: true,
     buttons:[{body: "No agregar información"}]
@@ -86,8 +138,25 @@ async (ctx) => {
        return fallBack()
     }
     
+}) */
+.addAnswer(['Si desea agregar mas información o alguna descripción lo puede hacer ahora','Escriba algo o envie un AUDIO','De lo contrario escriba NO'],
+{
+    capture: true
+},
+(ctx,{fallBack,flowDynamic}) => {
+    if(ctx.message.hasOwnProperty('audioMessage')){
+        addAudio(ctx)
+        addProps({description: "Audio adjuntado"})
+    }else if(ctx.message.hasOwnProperty('conversation') || ctx.message.hasOwnProperty('buttonsResponseMessage')){
+        addProps({description: ctx.body})
+    }
+    else{
+       flowDynamic([{body: "Este campo admite solo audio o texto"},{body:'Escriba algo o envie un AUDIO' }])
+       return fallBack()
+    }
+    
 })
-.addAnswer(['Si desea enviar una foto aquí lo puede hacer.','De lo contrario seleccione el botón.'],
+/* .addAnswer(['Si desea enviar una foto aquí lo puede hacer.','De lo contrario seleccione el botón.'],
 {
     capture: true,
     buttons: [{body: 'No adjuntar foto'}]
@@ -102,8 +171,23 @@ async (ctx) => {
        return fallBack()
     }
     
+}) */
+.addAnswer(['Si desea enviar una foto aquí lo puede hacer.','De lo contrario escriba "NO".'],
+{
+    capture: true
+},
+(ctx,{fallBack,flowDynamic}) => {
+    if(ctx.message.hasOwnProperty('imageMessage')){
+        addImage(ctx)
+    }else if (ctx.message.hasOwnProperty('conversation') || ctx.message.hasOwnProperty('buttonsResponseMessage')){
+        // descartamos que sea texto
+    }else{
+       flowDynamic([{body: "Este campo admite solo imagen o texto"}])
+       return fallBack()
+    }
+    
 })
-.addAnswer(['Seleccione la opcion deseada'],{
+/* .addAnswer(['Seleccione la opcion deseada'],{
     capture: true,
     buttons: [{ body: 'Enviar ticket' }, { body: 'Cancelar ticket' }],
 },
@@ -116,6 +200,22 @@ async (ctx,{endFlow}) =>{
     else{
         return endFlow({body: 'Se cancelo el envio del ticket',
         buttons:[{body:'Inicio' }]
+        })
+    }
+}) */
+.addAnswer(['Seleccione la opcion deseada','1. Enviar ticket','2. Cancelar ticket'],{
+    capture: true
+},
+async (ctx,{endFlow}) =>{
+    if(ctx.body === '1') {
+        const ticket = await sendEmail()
+        if(!ticket){
+            return endFlow({body: `Ticket generado exitosamente. Gracias por comunicarse con nosotros.`})
+        }
+        return endFlow({body: `Tu numero de ticket es ${ticket}. Gracias por comunicarse con nosotros.`})
+    }
+    else{
+        return endFlow({body: 'Se cancelo el envio del ticket. Escriba "Inicio" para volver a comenzar'
         })
     }
 })
