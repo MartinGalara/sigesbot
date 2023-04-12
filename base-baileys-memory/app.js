@@ -126,7 +126,7 @@ async (ctx) => {
 },
 [flujoSiges,flujoImpresoraFiscal,flujoImpresoraComun,flujoDespachosCeo,flujoServidor,flujoLibroIva,flujoAplicaciones])
 
-const asd = addKeyword(['asdd'])
+const asd = addKeyword(['asd'])
 .addAnswer(['Foto'],
 {
     capture: true
