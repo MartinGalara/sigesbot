@@ -1,0 +1,180 @@
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB032799A85CF8030CEE2',
+    participant: undefined
+  },
+  messageTimestamp: 1681311373,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'asdasd',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'asdasd',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0E07E23F84125352981',
+    participant: undefined
+  },
+  messageTimestamp: 1681311375,
+  pushName: 'Martín',
+  message: Message {
+    conversation: '1',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '1',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0E0E5C50FD01D32FF79',
+    participant: undefined
+  },
+  messageTimestamp: 1681311376,
+  pushName: 'Martín',
+  message: Message {
+    conversation: '0',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '0',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB090BFA4C3AAD2A72F82',
+    participant: undefined
+  },
+  messageTimestamp: 1681311383,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'asd',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'asd',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB092B4B1B7FFECA74DB6',
+    participant: undefined
+  },
+  messageTimestamp: 1681311386,
+  pushName: 'Martín',
+  message: Message {
+    conversation: '4',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '4',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0F008AAC7C912258C1D',
+    participant: undefined
+  },
+  messageTimestamp: 1681311393,
+  pushName: 'Martín',
+  message: Message {
+    audioMessage: AudioMessage {
+      url: 'https://mmg.whatsapp.net/v/t62.7117-24/11921432_922680878977494_5747619533373953567_n.enc?ccb=11-4&oh=01_AdScpoaNL2o7K5g44uo20wcVs8ukEsjTbP5d_oF-TaGAOQ&oe=645E4AC6&mms3=true',
+      mimetype: 'audio/ogg; codecs=opus',
+      fileSha256: [Uint8Array],
+      fileLength: [Long],
+      seconds: 2,
+      ptt: true,
+      mediaKey: [Uint8Array],
+      fileEncSha256: [Uint8Array],
+      directPath: '/v/t62.7117-24/11921432_922680878977494_5747619533373953567_n.enc?ccb=11-4&oh=01_AdScpoaNL2o7K5g44uo20wcVs8ukEsjTbP5d_oF-TaGAOQ&oe=645E4AC6',
+      mediaKeyTimestamp: [Long],
+      waveform: [Uint8Array]
+    },
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '_event_voice_note__437f87f3-7aa6-4fdb-9a10-e4155f7acfba',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB06B7B7392EB6F71A840',
+    participant: undefined
+  },
+  messageTimestamp: 1681311398,
+  pushName: 'Martín',
+  message: Message {
+    imageMessage: ImageMessage {
+      interactiveAnnotations: [],
+      scanLengths: [],
+      url: 'https://mmg.whatsapp.net/o1/v/t62.7118-24/f1/m233/up-oil-image-5af1a3cb-1b41-43c6-afeb-2f7e9182749e?ccb=9-4&oh=01_AdQYZYO7gJjRkri09I2kZA_Roa0HpCpKSih08wC_qx0QwQ&oe=645E3A44&mms3=true',
+      mimetype: 'image/jpeg',
+      caption: '',
+      fileSha256: [Uint8Array],
+      fileLength: [Long],
+      height: 115,
+      width: 207,
+      mediaKey: [Uint8Array],
+      fileEncSha256: [Uint8Array],
+      directPath: '/o1/v/t62.7118-24/f1/m233/up-oil-image-5af1a3cb-1b41-43c6-afeb-2f7e9182749e?ccb=9-4&oh=01_AdQYZYO7gJjRkri09I2kZA_Roa0HpCpKSih08wC_qx0QwQ&oe=645E3A44',
+      mediaKeyTimestamp: [Long],
+      jpegThumbnail: [Uint8Array],
+      viewOnce: false
+    },
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '_event_media__72e045a1-bd85-41db-8ce0-1af515abc85c',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB02527E2E23BD2BF752A',
+    participant: undefined
+  },
+  messageTimestamp: 1681311400,
+  pushName: 'Martín',
+  message: Message {
+    conversation: '1',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '1',
+  from: '5493515924253'
+}
