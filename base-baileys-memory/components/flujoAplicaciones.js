@@ -61,22 +61,28 @@ const flujoAplicaciones = addKeyword('7')
     }
     
 })
-/* .addAnswer(['Seleccione la opcion deseada'],{
-    capture: true,
-    buttons: [{ body: 'Enviar ticket' }, { body: 'Cancelar ticket' }],
+.addAnswer(['Que nivel de urgencia le daria a este ticket','1. Bajo','2. Medio','3. Alto'],{
+    capture: true
 },
-async (ctx,{endFlow}) =>{
-    if(ctx.body === 'Enviar ticket') {
-        const ticket = await sendEmail()
-        return endFlow({body: `Tu numero de ticket es ${ticket}. Gracias por comunicarse con nosotros.`
-        })
+async (ctx,{flowDynamic}) =>{
+    switch (ctx.body) {
+        case "1":
+            ctx.body = "Bajo"
+            break;
+        case "2":
+            ctx.body = "Medio"
+            flowDynamic([{body:"Si es fin de semana, luego de generar el ticket, comuniquese al nuevo telefono de guardia: adwawddawadw"}])
+            break;
+        case "3":
+            ctx.body = "Alto"
+            flowDynamic([{body:"Si es fin de semana, luego de generar el ticket, comuniquese al nuevo telefono de guardia: adwawddawadw"}])
+            break;
+        case "4":
+            ctx.body = "No especifica"
+        break;
     }
-    else{
-        return endFlow({body: 'Se cancelo el envio del ticket',
-        buttons:[{body:'Inicio' }]
-        })
-    }
-}) */
+    addProps({priority: ctx.body})
+})
 .addAnswer(['Seleccione la opcion deseada','1. Enviar ticket','2. Cancelar ticket'],{
     capture: true
 },

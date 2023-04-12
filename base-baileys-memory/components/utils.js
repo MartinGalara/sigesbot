@@ -47,6 +47,7 @@ const sendEmail = async () => {
     <p>Punto de facturación / PC: ${ticket.pf}</p>
     <p>ID TeamViewer: ${ticket.tv}</p>
     <p>Descripción del problema: ${ticket.description}</p>
+    <p>Urgencia indicada por el cliente: ${ticket.priority}</p>
     <br></br>
     <p>Para generar un ticket de operador: ${process.env.URL_OPTICKET}</p>
     </div>
@@ -64,6 +65,7 @@ const sendEmail = async () => {
     <p>ID TeamViewer: ${ticket.tv}</p>
     <p>Origen del problema: ${ticket.type}</p>
     <p>Descripción del problema: ${ticket.description}</p>
+    <p>Urgencia indicada por el cliente: ${ticket.priority}</p>
     <br></br>
     <p>Para generar un ticket de operador: ${process.env.URL_OPTICKET}</p>
     </div>
@@ -82,6 +84,7 @@ const sendEmail = async () => {
     <p>Punto de facturación / PC: ${ticket.pf}</p>
     <p>ID TeamViewer: ${ticket.tv}</p>
     <p>Descripción / Info adicional: ${ticket.description}</p>
+    <p>Urgencia indicada por el cliente: ${ticket.priority}</p>
     <br></br>
     <p>Para generar un ticket de operador: ${process.env.URL_OPTICKET}</p>
     </div>
@@ -102,6 +105,7 @@ const sendEmail = async () => {
     <p>Marca / Modelo: ${ticket.model}</p>
     <p>Se encuentra conectada / Tipo de conexión: ${ticket.connected}</p>
     <p>Descripción / Info adicional: ${ticket.description}</p>
+    <p>Urgencia indicada por el cliente: ${ticket.priority}</p>
     <br></br>
     <p>Para generar un ticket de operador: ${process.env.URL_OPTICKET}</p>
     </div>
@@ -203,7 +207,6 @@ const computerInfo = (option) => {
   if(ticket.computers[option-1] && option !== "0"){
     ticket.pf = ticket.computers[option-1].alias
     ticket.tv = ticket.computers[option-1].teamviewer_id
-    return true;
   }
 
 }
