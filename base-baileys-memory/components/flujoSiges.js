@@ -38,7 +38,6 @@ const flujoSiges = addKeyword('1')
         break;
     }
     addProps({type: ctx.body}) 
-    console.log("llegue aca")
 })
 .addAnswer('Describa el problema por escrito o adjunte un AUDIO',
 {

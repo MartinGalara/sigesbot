@@ -173,18 +173,28 @@ const computers = async (userId) => {
 
 const computerOptions = async () => {
 
-  const array = []
+  if(ticket.id !== "No brinda identificador"){
 
-  let i = 1;
+    const array = ['Indique el numero de la opcion que corresponda a la computadora que necesita soporte o punto de venta','Si ninguna es correcta coloque el numero 0']
 
-  ticket.computers.map(e => {
-    array.push({
-      body: `${i} - ${e.alias}`
+    let i = 1;
+  
+    ticket.computers.map(e => {
+      array.push({
+        body: `${i} - ${e.alias}`
+      })
+      i++;
     })
-    i++;
-  })
+  
+    return array;
+  }
+  else{
+    const array = ['En un solo mensaje, indique en que estacion / shop y en que computadora esta el problema']
 
-  return array;
+    return array;
+  }
+
+ 
 
 }
 
@@ -193,9 +203,7 @@ const computerInfo = (option) => {
   if(ticket.computers[option-1] && option !== "0"){
     ticket.pf = ticket.computers[option-1].alias
     ticket.tv = ticket.computers[option-1].teamviewer_id
-  }
-  else{
-    console.log("entre aca")
+    return true;
   }
 
 }
