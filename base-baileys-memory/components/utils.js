@@ -48,6 +48,7 @@ const sendEmail = async () => {
     <p>ID TeamViewer: ${ticket.tv}</p>
     <p>Descripción del problema: ${ticket.description}</p>
     <br></br>
+    <p>Para generar un ticket de operador: ${process.env.URL_OPTICKET}</p>
     </div>
     ` // html body
   }else if(ticket.problem === "Sistema SIGES" || ticket.problem === 'Aplicaciones'){
@@ -64,6 +65,7 @@ const sendEmail = async () => {
     <p>Origen del problema: ${ticket.type}</p>
     <p>Descripción del problema: ${ticket.description}</p>
     <br></br>
+    <p>Para generar un ticket de operador: ${process.env.URL_OPTICKET}</p>
     </div>
     ` // html body
   }else if(ticket.problem === "Libro IVA"){
@@ -81,6 +83,7 @@ const sendEmail = async () => {
     <p>ID TeamViewer: ${ticket.tv}</p>
     <p>Descripción / Info adicional: ${ticket.description}</p>
     <br></br>
+    <p>Para generar un ticket de operador: ${process.env.URL_OPTICKET}</p>
     </div>
     `
   }
@@ -100,6 +103,7 @@ const sendEmail = async () => {
     <p>Se encuentra conectada / Tipo de conexión: ${ticket.connected}</p>
     <p>Descripción / Info adicional: ${ticket.description}</p>
     <br></br>
+    <p>Para generar un ticket de operador: ${process.env.URL_OPTICKET}</p>
     </div>
     `
   }

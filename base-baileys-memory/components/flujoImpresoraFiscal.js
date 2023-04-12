@@ -1,72 +1,11 @@
 const { addKeyword } = require('@bot-whatsapp/bot')
 
 const {sendEmail} = require('./utils.js')
-const {validateUser} = require('./utils.js')
 const {addProps} = require('./utils.js')
-const {computers} = require('./utils.js')
-const {computerOptions} = require('./utils.js')
-const {computerInfo} = require('./utils.js')
 const {addAudio} = require('./utils.js')
 const {addImage} = require('./utils.js')
 
-/* const flujoImpresoraFiscal = addKeyword('Impresora fiscal')
-.addAnswer(['Para generar un ticket de soporte necesitamos validar la cuenta.','Por favor ingresa el codigo de cliente.'],
-{
-    capture: true
-},
-async (ctx, {endFlow,flowDynamic}) => {
-    let id = ctx.body
-    const user = await validateUser(id)
-    if(!user){
-        return endFlow({body: '❌ ID invalido ❌',
-        buttons:[{body:'Inicio' }]
-        })
-    }
-   
-    addProps({id: id})
-    addProps({phone: ctx.from})
-    await computers(id)
-    const pcs = await computerOptions();
-    setTimeout(()=> {
-        flowDynamic(pcs)
-    },500)
-}) */
 const flujoImpresoraFiscal = addKeyword('2')
-.addAnswer(['Para generar un ticket de soporte necesitamos validar la cuenta.','Por favor ingresa el codigo de cliente.'],
-{
-    capture: true
-},
-async (ctx, {endFlow,flowDynamic}) => {
-    let id = ctx.body
-    const user = await validateUser(id)
-    if(!user){
-        return endFlow({body: '❌ ID invalido ❌ Escriba "Inicio" para volver a comenzar'
-        })
-    }
-   
-    addProps({id: id})
-    addProps({phone: ctx.from})
-    await computers(id)
-    const pcs = await computerOptions();
-    setTimeout(()=> {
-        flowDynamic(pcs)
-    },500)
-})
-.addAnswer(['Indique el numero de la opcion que corresponda al punto de venta donde se encuentra la impresora','Si ninguna es correcta coloque el numero 0'],
-{
-    capture: true
-},
-async (ctx) => {
-    const pcs = await computerOptions();
-    if(ctx.body > 0 && ctx.body <= pcs.length){
-        computerInfo(ctx.body)
-    }
-    else{
-        if(ctx.body === "0") addProps({pf: "PC no esta en nuestra base de datos"})
-        else addProps({pf: ctx.body})
-        addProps({tv: "Consultar al cliente tv e indentificador de PC y reportarlo"})
-    }
-})
 /* .addAnswer('Seleccione la opcion deseada',{
     buttons: [{body: 'Soporte para impresora fiscal'},{body: 'Instalar una impresora fiscal'}],
     capture: true
