@@ -2,9 +2,6 @@ const axios = require('axios')
 const nodemailer = require("nodemailer")
 const dotenv = require("dotenv");
 const { downloadMediaMessage } = require('@adiwajshing/baileys')
-const makeWASocket = require('@adiwajshing/baileys')
-const BaileysProvider = require('@bot-whatsapp/provider/baileys')
-const { createProvider} = require('@bot-whatsapp/bot')
 
 dotenv.config();
 

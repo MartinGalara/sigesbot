@@ -4,6 +4,9 @@ const QRPortalWeb = require('@bot-whatsapp/portal')
 const BaileysProvider = require('@bot-whatsapp/provider/baileys')
 const MockAdapter = require('@bot-whatsapp/database/mock')
 
+const {default: makeWASocket} = require('@adiwajshing/baileys')
+const { BufferJSON, useMultiFileAuthState } =require('@adiwajshing/baileys')
+
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -157,8 +160,6 @@ const asd = addKeyword(['asdasd'])
     capture: true
 },
 async (ctx,{provider}) => {
-
-    sendMessage(provider)
 
 })
 
