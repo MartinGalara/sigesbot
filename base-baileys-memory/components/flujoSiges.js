@@ -1,9 +1,9 @@
 const { addKeyword } = require('@bot-whatsapp/bot')
 
-const {sendEmail} = require('./utils.js')
-const {addProps} = require('./utils.js')
-const {addAudio} = require('./utils.js')
-const {addImage} = require('./utils.js')
+const {sendEmail,addProps,addAudio,addImage,sendMessage} = require('./utils.js')
+
+const dotenv = require("dotenv");
+dotenv.config();
 
 const flujoSiges = addKeyword('1')
 /* .addAnswer('Indique el origen del problema',
@@ -114,11 +114,11 @@ async (ctx,{flowDynamic}) =>{
             break;
         case "2":
             ctx.body = "Medio"
-            flowDynamic([{body:"Si es fin de semana, luego de generar el ticket, comuniquese al nuevo telefono de guardia: adwawddawadw"}])
+            flowDynamic([{body:`Si es fin de semana, luego de generar el ticket, comuniquese al nuevo telefono de guardia: ${process.env.GUARDIA}`}])
             break;
         case "3":
             ctx.body = "Alto"
-            flowDynamic([{body:"Si es fin de semana, luego de generar el ticket, comuniquese al nuevo telefono de guardia: adwawddawadw"}])
+            flowDynamic([{body:`Si es fin de semana, luego de generar el ticket, comuniquese al nuevo telefono de guardia: ${process.env.GUARDIA}`}])
             break;
         case "4":
             ctx.body = "No especifica"
@@ -129,9 +129,10 @@ async (ctx,{flowDynamic}) =>{
 .addAnswer(['Seleccione la opcion deseada','1. Enviar ticket','2. Cancelar ticket'],{
     capture: true
 },
-async (ctx,{endFlow}) =>{
+async (ctx,{endFlow,provider}) =>{
     if(ctx.body === '1') {
         const ticket = await sendEmail()
+        await sendMessage(provider)
         if(!ticket){
             return endFlow({body: `Ticket generado exitosamente. Gracias por comunicarse con nosotros.`})
         }

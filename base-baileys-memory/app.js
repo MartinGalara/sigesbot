@@ -14,12 +14,8 @@ const flujoDespachosCeo = require('./components/flujoDespachosCeo.js')
 const flujoServidor = require('./components/flujoServidor.js')
 const flujoLibroIva = require('./components/flujoLibroIva.js')
 const flujoAplicaciones = require('./components/flujoAplicaciones.js')
-const flujo2 = require('./components/flujo2.js')
-const {addProps,deleteTicketData,validateUser,computers,computerOptions,computerInfo} = require('./components/utils.js')
 
-const {useMultiFileAuthState} = require('@adiwajshing/baileys')
-
-const { default: makeWASocket } = require('@adiwajshing/baileys')
+const {addProps,deleteTicketData,validateUser,computers,computerOptions,computerInfo,sendMessage} = require('./components/utils.js')
 
 const opcionesProblema = ['Sistema SIGES','Impresora fiscal','Impresora común','Despachos CEO','Servidor','Libro IVA','Aplicaciones']
 
@@ -82,6 +78,7 @@ async (ctx, {flowDynamic,endFlow}) => {
     addProps({email: "No brinda identificador"})
     addProps({tv: "No brinda identificador"})
     addProps({pf: "No brinda identificador"})
+    addProps({vip: null})
     addProps({phone: ctx.from})
     const pcs = await computerOptions();
     setTimeout(()=> {
@@ -132,16 +129,15 @@ const asd = addKeyword(['asdasd'])
 {
     capture: true
 },
-async (ctx,{gotoFlow}) => {
+async (ctx,{provider}) => {
 
-    console.log("flujo 1")
-    gotoFlow(flujo2)
+    sendMessage(provider)
 
 })
 
 const main = async () => {
     const adapterDB = new MockAdapter()
-    const adapterFlow = createFlow([asd])
+    const adapterFlow = createFlow([flujoPrincipal])
     const adapterProvider = createProvider(BaileysProvider)
 
     createBot({

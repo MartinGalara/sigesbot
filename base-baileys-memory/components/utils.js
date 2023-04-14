@@ -134,6 +134,7 @@ const validateUser = async (id) => {
   if(user.data.length !== 0){
     ticket.email = user.data[0].email
     ticket.info = user.data[0].info
+    ticket.vip = user.data[0].vip
     return user.data[0]
   }
   else{
@@ -243,12 +244,11 @@ const deleteTicketData = () => {
 }
 
 
-const sendMessage = async () => {
+const sendMessage = async (provider) => {
 
-  /* var number = '5493515924253@s.whatsapp.net'
-  var message = "asd"
-  await adapterProvider.sendText(`${number}@c.us`,message) */
-  console.log("entre a enviar mensaje")
+    const telefono = ticket.vip
+    const prov = provider.getInstance()
+    await prov.sendMessage(telefono,{text:`El cliente ${ticket.info} genero un ticket pidiendo soporte para ${ticket.problem}`})
 
 }
 
