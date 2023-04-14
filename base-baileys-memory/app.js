@@ -52,7 +52,34 @@ const flujoPrincipal = addKeyword(['botbot'])
         })
     }
 })
-.addAnswer(['Para brindar soporte de una manera mas eficiente necesitamos validar la cuenta.','Ingrese su codigo de identificacion.','Si no conoce su codigo de identificacion envie "0"'],
+.addAnswer(["Indique la bandera de su estacion","1. YPF","2. SHELL","3. AXION","4. PUMA","5. BLANCA"],
+    {
+        capture: true
+    },
+    (ctx,{flowDynamic,fallBack}) => {
+       switch (ctx.body) {
+        case "1": 
+            flowDynamic([{body: "Para brindar soporte de una manera mas eficiente necesitamos validar la cuenta."},{body: "Ingrese su numero de APIEST"}])
+            break;
+        case "2": 
+            flowDynamic([{body: "Para brindar soporte de una manera mas eficiente necesitamos validar la cuenta."},{body: "Ingrese su numero de identificacion SHELL"}])
+            break;
+        case "3": 
+            flowDynamic([{body: "Para brindar soporte de una manera mas eficiente necesitamos validar la cuenta."},{body: "Ingrese su numero de identificacion AXION"}])
+            break;
+        case "4": 
+            flowDynamic([{body: "Para brindar soporte de una manera mas eficiente necesitamos validar la cuenta."},{body: "Ingrese su numero de identificacion PUMA"}])
+            break;
+        case "5": 
+            flowDynamic([{body: "Para brindar soporte de una manera mas eficiente necesitamos validar la cuenta."},{body: "Ingrese su numero de identificacion"}])
+            break;
+       
+        default:
+            return fallBack();
+            break;
+       }
+    })
+.addAnswer(['Si no conoce su codigo de identificacion envie "0"'],
 {
     capture: true
 },

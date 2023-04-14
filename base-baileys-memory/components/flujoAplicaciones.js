@@ -27,22 +27,6 @@ const flujoAplicaciones = addKeyword('7')
     }
     
 })
-/* .addAnswer(['Si desea enviar una foto aquí lo puede hacer.','De lo contrario seleccione el botón.'],
-{
-    capture: true,
-    buttons: [{body: 'No adjuntar foto'}]
-},
-(ctx,{fallBack,flowDynamic}) => {
-    if(ctx.message.hasOwnProperty('imageMessage')){
-        addImage(ctx)
-    }else if (ctx.message.hasOwnProperty('conversation') || ctx.message.hasOwnProperty('buttonsResponseMessage')){
-        // descartamos que sea texto
-    }else{
-       flowDynamic([{body: "Este campo admite solo imagen o texto"}])
-       return fallBack()
-    }
-    
-}) */
 .addAnswer(['Si desea enviar una foto aquí lo puede hacer.','De lo contrario escriba "NO".'],
 {
     capture: true
