@@ -14,6 +14,7 @@ const flujoDespachosCeo = require('./components/flujoDespachosCeo.js')
 const flujoServidor = require('./components/flujoServidor.js')
 const flujoLibroIva = require('./components/flujoLibroIva.js')
 const flujoAplicaciones = require('./components/flujoAplicaciones.js')
+const flujo2 = require('./components/flujo2.js')
 const {addProps,deleteTicketData,validateUser,computers,computerOptions,computerInfo} = require('./components/utils.js')
 
 const {useMultiFileAuthState} = require('@adiwajshing/baileys')
@@ -127,17 +128,20 @@ async (ctx) => {
 [flujoSiges,flujoImpresoraFiscal,flujoImpresoraComun,flujoDespachosCeo,flujoServidor,flujoLibroIva,flujoAplicaciones])
 
 const asd = addKeyword(['asdasd'])
-.addAnswer(['Foto'],
+.addAnswer(['enviar mensaje'],
 {
     capture: true
 },
-async (ctx) => {
+async (ctx,{gotoFlow}) => {
+
+    console.log("flujo 1")
+    gotoFlow(flujo2)
 
 })
 
 const main = async () => {
     const adapterDB = new MockAdapter()
-    const adapterFlow = createFlow([flujoPrincipal])
+    const adapterFlow = createFlow([asd])
     const adapterProvider = createProvider(BaileysProvider)
 
     createBot({
