@@ -62,7 +62,7 @@ const flujoPrincipal = addKeyword(['botbot'])
     (ctx,{flowDynamic,fallBack}) => {
        switch (ctx.body) {
         case "1": 
-            flowDynamic([{body: "Para brindar soporte de una manera mas eficiente necesitamos validar la cuenta."},{body: "Ingrese su numero de APIEST"}])
+            flowDynamic([{body: "Para brindar soporte de una manera mas eficiente necesitamos validar la cuenta."},{body: "Ingrese su numero de APIES"}])
             break;
         case "2": 
             flowDynamic([{body: "Para brindar soporte de una manera mas eficiente necesitamos validar la cuenta."},{body: "Ingrese su numero de identificacion SHELL"}])
