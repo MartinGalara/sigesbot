@@ -34,7 +34,7 @@ const sendEmail = async () => {
     data.attachments = mailAttachments;
   }
 
-  if(ticket.problem === "Despachos CEO" || ticket.problem === 'Servidor'){
+  if(ticket.problem === "Despachos CIO" || ticket.problem === 'Servidor'){
     data.html = `
     <div>
     <p>Datos del ticket</p>
@@ -237,15 +237,18 @@ const addImage = async (ctx) => {
 const deleteTicketData = () => {
 
   mailAttachments = []
+  ticket = {}
 
 }
 
 
 const sendMessage = async (provider) => {
 
-    const telefono = ticket.vip
-    const prov = provider.getInstance()
-    await prov.sendMessage(telefono,{text:`El cliente ${ticket.info} genero un ticket pidiendo soporte para ${ticket.problem}`})
+    if(ticket.vip){
+      const telefono = ticket.vip
+      const prov = provider.getInstance()
+      await prov.sendMessage(telefono,{text:`El cliente ${ticket.info} genero un ticket pidiendo soporte para ${ticket.problem}`})
+    }
 
 }
 

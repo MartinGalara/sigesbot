@@ -1,0 +1,620 @@
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0E905FBFDD17068B879',
+    participant: undefined
+  },
+  messageTimestamp: 1681742713,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'botbot',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'botbot',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB001FB580072F6BB00CE',
+    participant: undefined
+  },
+  messageTimestamp: 1681742714,
+  pushName: 'Martín',
+  message: Message {
+    conversation: '1',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '1',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB02AE731C06AE3F585E2',
+    participant: undefined
+  },
+  messageTimestamp: 1681742716,
+  pushName: 'Martín',
+  message: Message {
+    conversation: '1',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '1',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0002FB8F4C930BA6DDE',
+    participant: undefined
+  },
+  messageTimestamp: 1681742730,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'WG4288',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'WG4288',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0FC4242201DFFBB98C1',
+    participant: undefined
+  },
+  messageTimestamp: 1681742735,
+  pushName: 'Martín',
+  message: Message {
+    conversation: '3',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '3',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB05C9EA2C893A7990D69',
+    participant: undefined
+  },
+  messageTimestamp: 1681742737,
+  pushName: 'Martín',
+  message: Message {
+    conversation: '1',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '1',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB085B24BD894AFF397AF',
+    participant: undefined
+  },
+  messageTimestamp: 1681742738,
+  pushName: 'Martín',
+  message: Message {
+    conversation: '2',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '2',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB098B19BD928323972BE',
+    participant: undefined
+  },
+  messageTimestamp: 1681742740,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'asd',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'asd',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0DF59050CD939C71F66',
+    participant: undefined
+  },
+  messageTimestamp: 1681742741,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'asd',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'asd',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB03B4A44F62994DC1258',
+    participant: undefined
+  },
+  messageTimestamp: 1681742743,
+  pushName: 'Martín',
+  message: Message {
+    conversation: '2',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '2',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB058345A3E6E5BE41074',
+    participant: undefined
+  },
+  messageTimestamp: 1681742745,
+  pushName: 'Martín',
+  message: Message {
+    conversation: '1',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '1',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0CE0348DAC0812E7601',
+    participant: undefined
+  },
+  messageTimestamp: 1681742754,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'WG4288',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'WG4288',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0B04ADE557613B2A0F9',
+    participant: undefined
+  },
+  messageTimestamp: 1681742758,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'botbot',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'botbot',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB01B01905AB0EF446770',
+    participant: undefined
+  },
+  messageTimestamp: 1681742759,
+  pushName: 'Martín',
+  message: Message {
+    conversation: '1',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '1',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB01845465D964BC9A94A',
+    participant: undefined
+  },
+  messageTimestamp: 1681742761,
+  pushName: 'Martín',
+  message: Message {
+    conversation: '1',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '1',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0EDCB5351DE5942F812',
+    participant: undefined
+  },
+  messageTimestamp: 1681742764,
+  pushName: 'Martín',
+  message: Message {
+    conversation: '0',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '0',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB012A3ED56928C0A6BC5',
+    participant: undefined
+  },
+  messageTimestamp: 1681742768,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'asdadssda',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'asdadssda',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0FE3C52488759D67C9D',
+    participant: undefined
+  },
+  messageTimestamp: 1681742769,
+  pushName: 'Martín',
+  message: Message {
+    conversation: '1',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '1',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB082446E91A21DDF57F6',
+    participant: undefined
+  },
+  messageTimestamp: 1681742771,
+  pushName: 'Martín',
+  message: Message {
+    conversation: '1',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '1',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB020D43F506BA43EF4BB',
+    participant: undefined
+  },
+  messageTimestamp: 1681742773,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'asd',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'asd',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0DE19004A18C48EA0E4',
+    participant: undefined
+  },
+  messageTimestamp: 1681742774,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'asd',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'asd',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0D40CC1AAEFC258D6F0',
+    participant: undefined
+  },
+  messageTimestamp: 1681742775,
+  pushName: 'Martín',
+  message: Message {
+    conversation: '2',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '2',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB08F3D340FBF107CD71F',
+    participant: undefined
+  },
+  messageTimestamp: 1681742777,
+  pushName: 'Martín',
+  message: Message {
+    conversation: '1',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '1',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB05340457D91E977BED0',
+    participant: undefined
+  },
+  messageTimestamp: 1681743588,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'che amor',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'che amor',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0981BF648B7741F33D9',
+    participant: undefined
+  },
+  messageTimestamp: 1681743593,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'y si directamente la buscas vos acata con marcos ?',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'y si directamente la buscas vos acata con marcos ?',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0D7635F8932B9554B70',
+    participant: undefined
+  },
+  messageTimestamp: 1681743598,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'par ano andar viendo si me hablan o no ?',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'par ano andar viendo si me hablan o no ?',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0F5B4E5730A4CC5B5A8',
+    participant: undefined
+  },
+  messageTimestamp: 1681743601,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'te jode mucho ?',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'te jode mucho ?',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0A2DEDDB4E2931B1E2C',
+    participant: undefined
+  },
+  messageTimestamp: 1681743982,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'ok',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'ok',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0E8B2B5B5068A96B7E4',
+    participant: undefined
+  },
+  messageTimestamp: 1681744007,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'ok',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'ok',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0D5B1277558C6EE0DA1',
+    participant: undefined
+  },
+  messageTimestamp: 1681744570,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'Asado Casa Gabriel - 23/4\n' +
+      'Asado lo compro yo\n' +
+      'Horario medio dia\n' +
+      'Bebida compro algo y lo demas traigan a gusto de cada uno\n' +
+      'Tienen hasta el 20 para confirmar, la fecha no se mueve\n' +
+      'Si vienen acompañados por sus bendiciones me avisan.\n' +
+      'Fin del comunicado',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'Asado Casa Gabriel - 23/4\n' +
+    'Asado lo compro yo\n' +
+    'Horario medio dia\n' +
+    'Bebida compro algo y lo demas traigan a gusto de cada uno\n' +
+    'Tienen hasta el 20 para confirmar, la fecha no se mueve\n' +
+    'Si vienen acompañados por sus bendiciones me avisan.\n' +
+    'Fin del comunicado',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0EBD80A5841B246D186',
+    participant: undefined
+  },
+  messageTimestamp: 1681744586,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'confirmo que voy al asado amor ? no tenes drama en quedarte con los niños ?',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'confirmo que voy al asado amor ? no tenes drama en quedarte con los niños ?',
+  from: '5493515924253'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493515924253@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0F5E43F7CE671FADCCC',
+    participant: undefined
+  },
+  messageTimestamp: 1681744600,
+  pushName: 'Martín',
+  message: Message {
+    conversation: 'o queres que vea si mis viejos la pueden ver a cata?  o si la llevo a cata conmigo ?',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'o queres que vea si mis viejos la pueden ver a cata?  o si la llevo a cata conmigo ?',
+  from: '5493515924253'
+}

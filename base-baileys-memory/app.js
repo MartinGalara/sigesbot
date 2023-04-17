@@ -13,24 +13,24 @@ dotenv.config();
 const flujoSiges = require('./components/flujoSiges.js')
 const flujoImpresoraFiscal = require('./components/flujoImpresoraFiscal.js')
 const flujoImpresoraComun = require('./components/flujoImpresoraComun.js')
-const flujoDespachosCeo = require('./components/flujoDespachosCeo.js')
+const flujoDespachosCio = require('./components/flujoDespachosCio.js')
 const flujoServidor = require('./components/flujoServidor.js')
 const flujoLibroIva = require('./components/flujoLibroIva.js')
 const flujoAplicaciones = require('./components/flujoAplicaciones.js')
 
 const {addProps,deleteTicketData,validateUser,computers,computerOptions,computerInfo,sendMessage} = require('./components/utils.js')
 
-const opcionesProblema = ['Sistema SIGES','Impresora fiscal','Impresora común','Despachos CEO','Servidor','Libro IVA','Aplicaciones']
+const opcionesProblema = ['Sistema SIGES','Impresora fiscal','Impresora común','Despachos CIO','Servidor','Libro IVA','Aplicaciones']
 
 const saludo = ['Gracias por comunicarte con Sistema Siges. Si es fin de semana, para ser derivado a la guardia primero hay que generar un ticket','Indique el numero de la opción deseada',`1. Generar un ticket de soporte`,'2. Salir']
 
-const opciones = ['Indique el numero de la opción correspondiente al servicio en el que necesita soporte','1. Sistema SIGES','2. Impresora fiscal','3. Impresora común','4. Despachos CEO','5. Servidor','6. Libro IVA','7. Aplicaciones']
+const opciones = ['Indique el numero de la opción correspondiente al servicio en el que necesita soporte','1. Sistema SIGES','2. Impresora fiscal','3. Impresora común','4. Despachos CIO','5. Servidor','6. Libro IVA','7. Aplicaciones']
 
 const objOpciones = {
     1: "Sistema SIGES",
     2: "Impresora fiscal",
     3: "Impresora común",
-    4: "Despachos CEO",
+    4: "Despachos CIO",
     5: "Servidor",
     6: "Libro IVA",
     7: "Aplicaciones"
@@ -122,6 +122,7 @@ async (ctx, {flowDynamic,endFlow}) => {
     capture: true
 },
 async (ctx) => {
+
     if(!unknownFlag){
         const pcs = await computerOptions();
         if(ctx.body > 0 && ctx.body <= pcs.length){
@@ -152,7 +153,7 @@ async (ctx) => {
     }
     addProps({problem: ctx.body})
 },
-[flujoSiges,flujoImpresoraFiscal,flujoImpresoraComun,flujoDespachosCeo,flujoServidor,flujoLibroIva,flujoAplicaciones])
+[flujoSiges,flujoImpresoraFiscal,flujoImpresoraComun,flujoDespachosCio,flujoServidor,flujoLibroIva,flujoAplicaciones])
 
 const asd = addKeyword(['asdasd'])
 .addAnswer(['enviar mensaje'],
