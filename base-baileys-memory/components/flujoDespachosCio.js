@@ -2,7 +2,7 @@ const { addKeyword } = require('@bot-whatsapp/bot')
 
 const {sendEmail,addProps,addAudio,addImage,sendMessage} = require('./utils.js')
 
-const flujoDespachosCio = addKeyword('4')
+const flujoDespachosCio = addKeyword('1')
 .addAnswer('Describa el problema por escrito o adjunte un AUDIO',
 {
     capture: true

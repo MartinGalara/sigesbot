@@ -2,12 +2,20 @@ const { addKeyword } = require('@bot-whatsapp/bot')
 
 const {sendEmail,addProps,addAudio,addImage,sendMessage} = require('./utils.js')
 
-const flujoAplicaciones = addKeyword('7')
-.addAnswer('Indique en que aplicación esta teniendo el inconveniente',
+const flujoAplicaciones = addKeyword('2')
+.addAnswer(['Elija en que aplicación esta teniendo el inconveniente','1. App YPF','2. Mercado Pago'],
 {
     capture: true
 },
 (ctx) => {
+    switch (ctx.body) {
+        case "1":
+            ctx.body = "Soporte para App YPF"
+            break;
+        case "2":
+            ctx.body = "Instalar una Mercado Pago"
+            break;
+    }
     addProps(ctx.from,{type: ctx.body})
 })
 .addAnswer('Describa el problema por escrito o adjunte un AUDIO',
@@ -27,7 +35,37 @@ const flujoAplicaciones = addKeyword('7')
     }
     
 })
-.addAnswer(['Si desea enviar una foto aquí lo puede hacer.','De lo contrario escriba "NO".'],
+.addAnswer(['Si desea, puede adjuntar hasta 3 fotos','Adjunte la foto 1','De lo contrario envíe "0".'],
+{
+    capture: true
+},
+(ctx,{fallBack,flowDynamic}) => {
+    if(ctx.message.hasOwnProperty('imageMessage')){
+        addImage(ctx.from,ctx)
+    }else if (ctx.message.hasOwnProperty('conversation') || ctx.message.hasOwnProperty('buttonsResponseMessage')){
+        // descartamos que sea texto
+    }else{
+       flowDynamic([{body: "Este campo admite solo imagen o texto"}])
+       return fallBack()
+    }
+    
+})
+.addAnswer(['Adjunte la foto 2','De lo contrario envíe "0".'],
+{
+    capture: true
+},
+(ctx,{fallBack,flowDynamic}) => {
+    if(ctx.message.hasOwnProperty('imageMessage')){
+        addImage(ctx.from,ctx)
+    }else if (ctx.message.hasOwnProperty('conversation') || ctx.message.hasOwnProperty('buttonsResponseMessage')){
+        // descartamos que sea texto
+    }else{
+       flowDynamic([{body: "Este campo admite solo imagen o texto"}])
+       return fallBack()
+    }
+    
+})
+.addAnswer(['Adjunte la foto 3','De lo contrario envíe "0".'],
 {
     capture: true
 },

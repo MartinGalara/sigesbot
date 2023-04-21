@@ -183,7 +183,7 @@ const computerOptions = (from) => {
 
   if(ticket[from].id !== "No brinda identificador"){
 
-    const array = ['Indique el numero de la opcion que corresponda a la computadora que necesita soporte o punto de venta','Si ninguna es correcta coloque el numero 0']
+    const array = ['Elija el número del puesto de trabajo donde necesita soporte','Si ninguno es correcto, envíe "0"']
 
     let i = 1;
   
@@ -197,7 +197,7 @@ const computerOptions = (from) => {
     return array;
   }
   else{
-    const array = ['En un solo mensaje, indique en que estacion / shop y en que computadora esta el problema']
+    const array = ['En un solo mensaje, indique en que estacion / shop y en que puesto de trabajo necesita soporte']
 
     return array;
   }

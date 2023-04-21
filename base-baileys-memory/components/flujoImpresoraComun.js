@@ -2,7 +2,7 @@ const { addKeyword } = require('@bot-whatsapp/bot')
 
 const {sendEmail,addProps,addAudio,addImage,sendMessage} = require('./utils.js')
 
-const flujoImpresoraComun = addKeyword('3')
+const flujoImpresoraComun = addKeyword('4')
 .addAnswer(['Seleccione la opcion deseada','1. Soporte para impresora','2. Instalar una impresora'],{
     capture: true
 },
@@ -17,21 +17,7 @@ const flujoImpresoraComun = addKeyword('3')
     }
     addProps(ctx.from,{type: ctx.body})
 })
-.addAnswer('Indique marca y modelo de la impresora',
-{
-    capture: true
-},
-(ctx) => {
-    addProps(ctx.from,{model: ctx.body})
-})
-.addAnswer('La impresora se encuentra conectada ?',
-{
-    capture: true
-},
-(ctx) => {
-    addProps(ctx.from,{connected: ctx.body})
-})
-.addAnswer(['Si desea agregar mas información o alguna descripción lo puede hacer ahora','Escriba algo o envie un AUDIO','De lo contrario escriba NO'],
+.addAnswer(['Aqui puede agregar informacion. Si conoce marca / modelo de impresora y/o si se encuentra conectada, indiquelo.','Escriba o envie un AUDIO','De lo contrario escriba NO'],
 {
     capture: true
 },

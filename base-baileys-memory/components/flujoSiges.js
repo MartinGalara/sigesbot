@@ -5,7 +5,7 @@ const {sendEmail,addProps,addAudio,addImage,sendMessage} = require('./utils.js')
 const dotenv = require("dotenv");
 dotenv.config();
 
-const flujoSiges = addKeyword('1')
+const flujoSiges = addKeyword('5')
 .addAnswer(['Indique el origen del problema','1. Facturación','2. Cierre de turno','3. Informes','4. Otro'],
 {
     capture: true

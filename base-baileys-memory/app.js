@@ -20,20 +20,20 @@ const flujoAplicaciones = require('./components/flujoAplicaciones.js')
 
 const {isUnknown,addProps,deleteTicketData,validateUser,computers,computerOptions,computerInfo,sendMessage} = require('./components/utils.js')
 
-const opcionesProblema = ['Sistema SIGES','Impresora fiscal','Impresora común','Despachos CIO','Servidor','Libro IVA','Aplicaciones']
+const opcionesProblema = ['Despachos CIO','Aplicaciones','Impresora Fiscal / Comandera','Impresora Común / Oficina','Sistema SIGES','Libro IVA','Servidor']
 
-const saludo = ['Gracias por comunicarte con Sistema Siges. Si es fin de semana, para ser derivado a la guardia primero hay que generar un ticket','Indique el numero de la opción deseada',`1. Generar un ticket de soporte`,'2. Salir']
+const saludo = ['Gracias por comunicarte con Sistema SIGES.','Elija el numero de la opción deseada',`1. Generar un ticket de soporte`,'2. Salir']
 
-const opciones = ['Indique el numero de la opción correspondiente al servicio en el que necesita soporte','1. Sistema SIGES','2. Impresora fiscal','3. Impresora común','4. Despachos CIO','5. Servidor','6. Libro IVA','7. Aplicaciones']
+const opciones = ['Indique el numero de la opción correspondiente al servicio en el que necesita soporte','1. Despachos CIO','2. Aplicaciones','3. Impresora Fiscal / Comandera','4. Impresora Común / Oficina','5. Sistema SIGES','6. Libro IVA','7. Servidor']
 
 const objOpciones = {
-    1: "Sistema SIGES",
-    2: "Impresora fiscal",
-    3: "Impresora común",
-    4: "Despachos CIO",
-    5: "Servidor",
+    1: "Despachos CIO",
+    2: "Aplicaciones",
+    3: "Impresora Fiscal / Comandera",
+    4: "Impresora Común / Oficina",
+    5: "Sistema SIGES",
     6: "Libro IVA",
-    7: "Aplicaciones"
+    7: "Servidor"
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,26 +53,38 @@ const flujoPrincipal = addKeyword(['botbot'])
         })
     }
 })
-.addAnswer(["Indique la bandera de su estacion","1. YPF","2. SHELL","3. AXION","4. PUMA","5. BLANCA"],
+.addAnswer(["Elija para qué necesita soporte","1. YPF (Estación)","2. SHELL (Estación)","3. AXION (Estación)","4. PUMA (Estación)","5. GULF (Estación)","6. REFINOR (Estación)","7. BLANCA (Estación)","8. SHOP","9. OTRO"],
     {
         capture: true
     },
     (ctx,{flowDynamic,fallBack}) => {
        switch (ctx.body) {
         case "1": 
-            flowDynamic([{body: "Para brindar soporte de una manera mas eficiente necesitamos validar la cuenta."},{body: "Ingrese su numero de APIES"}])
+            flowDynamic([{body: "Ingrese su numero de APIES"}])
             break;
         case "2": 
-            flowDynamic([{body: "Para brindar soporte de una manera mas eficiente necesitamos validar la cuenta."},{body: "Ingrese su numero de identificacion SHELL"}])
+            flowDynamic([{body: "Ingrese su numero de identificacion SHELL"}])
             break;
         case "3": 
-            flowDynamic([{body: "Para brindar soporte de una manera mas eficiente necesitamos validar la cuenta."},{body: "Ingrese su numero de identificacion AXION"}])
+            flowDynamic([{body: "Ingrese su numero de identificacion AXION"}])
             break;
         case "4": 
-            flowDynamic([{body: "Para brindar soporte de una manera mas eficiente necesitamos validar la cuenta."},{body: "Ingrese su numero de identificacion PUMA"}])
+            flowDynamic([{body: "Ingrese su numero de identificacion PUMA"}])
             break;
         case "5": 
-            flowDynamic([{body: "Para brindar soporte de una manera mas eficiente necesitamos validar la cuenta."},{body: "Ingrese su numero de identificacion"}])
+            flowDynamic([{body: "Ingrese su numero de identificacion GULF"}])
+            break;
+        case "6": 
+            flowDynamic([{body: "Ingrese su numero de identificacion REFINOR"}])
+            break;   
+        case "7": 
+            flowDynamic([{body: "Ingrese su numero de identificacion"}])
+            break;
+        case "8": 
+            flowDynamic([{body: "Ingrese su numero de identificacion"}])
+            break;
+        case "9": 
+            flowDynamic([{body: "Ingrese su numero de identificacion"}])
             break;
        
         default:
@@ -80,7 +92,7 @@ const flujoPrincipal = addKeyword(['botbot'])
             break;
        }
     })
-.addAnswer(['Si no conoce su codigo de identificacion envie "0"'],
+.addAnswer(['Si no lo conoce envie "0"'],
 {
     capture: true
 },

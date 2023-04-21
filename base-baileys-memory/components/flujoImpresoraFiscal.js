@@ -2,7 +2,7 @@ const { addKeyword } = require('@bot-whatsapp/bot')
 
 const {sendEmail,addProps,addAudio,addImage,sendMessage} = require('./utils.js')
 
-const flujoImpresoraFiscal = addKeyword('2')
+const flujoImpresoraFiscal = addKeyword('3')
 .addAnswer(['Seleccione la opcion deseada','1. Soporte para impresora fiscal','2. Instalar una impresora fiscal'],{
     capture: true
 },
@@ -17,32 +17,7 @@ const flujoImpresoraFiscal = addKeyword('2')
     }
     addProps(ctx.from,{type: ctx.body})
 })
-.addAnswer('Indique marca y modelo de la impresora',
-{
-    capture: true
-},
-(ctx) => {
-    addProps(ctx.from,{model: ctx.body})
-})
-.addAnswer(['La impresora se encuentra conectada ? Con que tipo de cable ?','1. SI con cable UTP','2. SI con cable USB','3. No se encuentra conectada'],
-{
-    capture: true
-},
-(ctx) => {
-    switch (ctx.body) {
-        case "1":
-            ctx.body = "SI con cable UTP"
-            break;
-        case "2":
-            ctx.body = "SI con cable USB"
-            break;
-        case "3":
-            ctx.body = "No se encuentra conectada"
-            break;
-    }
-    addProps(ctx.from,{connected: ctx.body})
-})
-.addAnswer(['Si desea agregar mas información o alguna descripción lo puede hacer ahora','Escriba algo o envie un AUDIO','De lo contrario escriba NO'],
+.addAnswer(['Aqui puede agregar informacion. Si conoce marca / modelo de impresora y/o si se encuentra conectada y con que tipo de cable, indiquelo.','Escriba o envie un AUDIO','De lo contrario escriba NO'],
 {
     capture: true
 },
