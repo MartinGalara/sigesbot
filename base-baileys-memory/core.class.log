@@ -1,0 +1,209 @@
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493516454748@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0CA273EE0D3F9067C44',
+    participant: undefined
+  },
+  messageTimestamp: 1682090087,
+  pushName: 'Sabrii',
+  message: Message {
+    conversation: 'botbot',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'botbot',
+  from: '5493516454748'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493516454748@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB052867D3102624C5905',
+    participant: undefined
+  },
+  messageTimestamp: 1682090089,
+  pushName: 'Sabrii',
+  message: Message {
+    conversation: '1',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '1',
+  from: '5493516454748'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493516454748@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0F88FE2F8F411534974',
+    participant: undefined
+  },
+  messageTimestamp: 1682090091,
+  pushName: 'Sabrii',
+  message: Message {
+    conversation: '1',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '1',
+  from: '5493516454748'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493516454748@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0A8966F7121022C2D5B',
+    participant: undefined
+  },
+  messageTimestamp: 1682090094,
+  pushName: 'Sabrii',
+  message: Message {
+    conversation: 'FG8377',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: 'FG8377',
+  from: '5493516454748'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493516454748@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0F92BFB1B40A9C97818',
+    participant: undefined
+  },
+  messageTimestamp: 1682090099,
+  pushName: 'Sabrii',
+  message: Message {
+    conversation: '3',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '3',
+  from: '5493516454748'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493516454748@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0BA5B8A6C0129C515DB',
+    participant: undefined
+  },
+  messageTimestamp: 1682090101,
+  pushName: 'Sabrii',
+  message: Message {
+    conversation: '1',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '1',
+  from: '5493516454748'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493516454748@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB009943EC4D82AE23160',
+    participant: undefined
+  },
+  messageTimestamp: 1682090102,
+  pushName: 'Sabrii',
+  message: Message {
+    conversation: '1',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '1',
+  from: '5493516454748'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493516454748@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB02DD300091FD609F946',
+    participant: undefined
+  },
+  messageTimestamp: 1682090104,
+  pushName: 'Sabrii',
+  message: Message {
+    conversation: '1',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '1',
+  from: '5493516454748'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493516454748@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0D519A2788EBC2EF698',
+    participant: undefined
+  },
+  messageTimestamp: 1682090106,
+  pushName: 'Sabrii',
+  message: Message {
+    conversation: '1',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '1',
+  from: '5493516454748'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493516454748@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB0870F6B5CF43006944A',
+    participant: undefined
+  },
+  messageTimestamp: 1682090107,
+  pushName: 'Sabrii',
+  message: Message {
+    conversation: '1',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '1',
+  from: '5493516454748'
+}
+[handleMsg]:  {
+  key: {
+    remoteJid: '5493516454748@s.whatsapp.net',
+    fromMe: false,
+    id: '3EB07F00193A39E85FA32C',
+    participant: undefined
+  },
+  messageTimestamp: 1682090109,
+  pushName: 'Sabrii',
+  message: Message {
+    conversation: '1',
+    messageContextInfo: MessageContextInfo {
+      deviceListMetadata: [DeviceListMetadata],
+      deviceListMetadataVersion: 2
+    }
+  },
+  body: '1',
+  from: '5493516454748'
+}

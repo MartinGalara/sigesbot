@@ -111,8 +111,6 @@ const sendEmail = async (from) => {
 
   const mail = await transporter.sendMail(data);
 
-  if(ticket[from].unknown === false && !ticket[from].vip) delete ticket[from]
-
   return newTicket.id
 
   //console.log(mail)
@@ -262,7 +260,7 @@ const sendMessage = async (from,provider) => {
     }
 
   delete ticket[from]
-  
+
 }
 
 const isUnknown = (from) => {
