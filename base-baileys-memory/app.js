@@ -18,7 +18,7 @@ const flujoServidor = require('./components/flujoServidor.js')
 const flujoLibroIva = require('./components/flujoLibroIva.js')
 const flujoAplicaciones = require('./components/flujoAplicaciones.js')
 
-const {addProps,deleteTicketData,validateUser,computers,computerOptions,computerInfo,sendMessage} = require('./components/utils.js')
+const {isUnknown,addProps,deleteTicketData,validateUser,computers,computerOptions,computerInfo,sendMessage} = require('./components/utils.js')
 
 const opcionesProblema = ['Sistema SIGES','Impresora fiscal','Impresora común','Despachos CIO','Servidor','Libro IVA','Aplicaciones']
 
@@ -36,8 +36,6 @@ const objOpciones = {
     7: "Aplicaciones"
 }
 
-let unknownFlag = false;
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const flujoPrincipal = addKeyword(['botbot'])
@@ -46,7 +44,7 @@ const flujoPrincipal = addKeyword(['botbot'])
     capture: true
 },
 (ctx,{endFlow}) => {
-    deleteTicketData()
+    deleteTicketData(ctx.from)
     if(ctx.body === '2'){
         return endFlow({body: `Escriba "Inicio" para volver a comenzar`})
     }
@@ -89,32 +87,32 @@ const flujoPrincipal = addKeyword(['botbot'])
 async (ctx, {flowDynamic,endFlow}) => {
     let id = ctx.body
 
-    if(id !== "0"){
-    const user = await validateUser(id)
+if(id !== "0"){
+    const user = await validateUser(ctx.from,id)
     if(!user){
         return endFlow({body: '❌ ID invalido ❌ Escriba "Inicio" para volver a comenzar'
         })
     }
-   
-    addProps({id: id})
-    addProps({phone: ctx.from})
-    await computers(id)
-    const pcs = await computerOptions();
+    addProps(ctx.from,{unknown: false})
+    addProps(ctx.from,{id: id})
+    addProps(ctx.from,{phone: ctx.from})
+    await computers(ctx.from,id)
+    const pcs = computerOptions(ctx.from);
     setTimeout(()=> {
         flowDynamic(pcs)
     },500)
 }else{
-    addProps({id: "No brinda identificador"})
-    addProps({email: "No brinda identificador"})
-    addProps({tv: "No brinda identificador"})
-    addProps({pf: "No brinda identificador"})
-    addProps({vip: null})
-    addProps({phone: ctx.from})
-    const pcs = await computerOptions();
+    addProps(ctx.from,{unknown: true})
+    addProps(ctx.from,{id: "No brinda identificador"})
+    addProps(ctx.from,{email: "No brinda identificador"})
+    addProps(ctx.from,{tv: "No brinda identificador"})
+    addProps(ctx.from,{pf: "No brinda identificador"})
+    addProps(ctx.from,{vip: null})
+    addProps(ctx.from,{phone: ctx.from})
+    const pcs = computerOptions(ctx.from);
     setTimeout(()=> {
         flowDynamic(pcs)
     },500)
-    unknownFlag = true;
 }
 })
 .addAnswer(['Verificando'],
@@ -123,19 +121,19 @@ async (ctx, {flowDynamic,endFlow}) => {
 },
 async (ctx) => {
 
-    if(!unknownFlag){
-        const pcs = await computerOptions();
+    if(!isUnknown(ctx.from)){
+        const pcs = computerOptions(ctx.from);
         if(ctx.body > 0 && ctx.body <= pcs.length){
-            computerInfo(ctx.body)
+            computerInfo(ctx.from,ctx.body)
         }
         else{
-            if(ctx.body === "0") addProps({pf: "PC no esta en nuestra base de datos"})
-            else addProps({pf: ctx.body})
-            addProps({tv: "Consultar al cliente tv e indentificador de PC y reportarlo"})
+            if(ctx.body === "0") addProps(ctx.from,{pf: "PC no esta en nuestra base de datos"})
+            else addProps(ctx.from,{pf: ctx.body})
+            addProps(ctx.from,{tv: "Consultar al cliente tv e indentificador de PC y reportarlo"})
         }
     }
     else{
-        addProps({info: ctx.body})
+        addProps(ctx.from,{info: ctx.body})
     }
     
 })
@@ -151,7 +149,7 @@ async (ctx) => {
         return endFlow({body: '❌ Respuesta invalida ❌ Escriba "Inicio" para volver a comenzar' 
         })
     }
-    addProps({problem: ctx.body})
+    addProps(ctx.from,{problem: ctx.body})
 },
 [flujoSiges,flujoImpresoraFiscal,flujoImpresoraComun,flujoDespachosCio,flujoServidor,flujoLibroIva,flujoAplicaciones])
 

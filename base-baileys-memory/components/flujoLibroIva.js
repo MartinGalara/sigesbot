@@ -16,14 +16,14 @@ const flujoLibroIva = addKeyword('6')
             ctx.body = "Libro IVA Venta"
             break;
         }
-    addProps({type: ctx.body})
+    addProps(ctx.from,{type: ctx.body})
 })
 .addAnswer('Indique el período en el cual hay un inconveniente',
 {
     capture: true
 },
 (ctx) => {
-    addProps({timeFrame: ctx.body})
+    addProps(ctx.from,{timeFrame: ctx.body})
 })
 .addAnswer('Describa el problema por escrito o adjunte un AUDIO',
 {
@@ -31,10 +31,10 @@ const flujoLibroIva = addKeyword('6')
 },
 (ctx,{fallBack,flowDynamic}) => {
     if(ctx.message.hasOwnProperty('audioMessage')){
-        addAudio(ctx)
-        addProps({description: "Audio adjuntado"})
+        addAudio(ctx.from,ctx)
+        addProps(ctx.from,{description: "Audio adjuntado"})
     }else if(ctx.message.hasOwnProperty('conversation') || ctx.message.hasOwnProperty('buttonsResponseMessage')){
-        addProps({description: ctx.body})
+        addProps(ctx.from,{description: ctx.body})
     }
     else{
        flowDynamic([{body: "Este campo admite solo audio o texto"},{body:'Describa el problema por escrito o adjunte un AUDIO' }])
@@ -48,7 +48,7 @@ const flujoLibroIva = addKeyword('6')
 },
 (ctx,{fallBack,flowDynamic}) => {
     if(ctx.message.hasOwnProperty('imageMessage')){
-        addImage(ctx)
+        addImage(ctx.from,ctx)
     }else if (ctx.message.hasOwnProperty('conversation') || ctx.message.hasOwnProperty('buttonsResponseMessage')){
         // descartamos que sea texto
     }else{
@@ -77,15 +77,15 @@ async (ctx,{flowDynamic}) =>{
             ctx.body = "No especifica"
         break;
     }
-    addProps({priority: ctx.body})
+    addProps(ctx.from,{priority: ctx.body})
 })
 .addAnswer(['Seleccione la opcion deseada','1. Enviar ticket','2. Cancelar ticket'],{
     capture: true
 },
 async (ctx,{endFlow,provider}) =>{
     if(ctx.body === '1') {
-        const ticket = await sendEmail()
-        await sendMessage(provider)
+        const ticket = await sendEmail(ctx.from)
+        await sendMessage(ctx.from,provider)
         if(!ticket){
             return endFlow({body: `Ticket generado exitosamente. Gracias por comunicarse con nosotros.`})
         }

@@ -7,11 +7,9 @@ dotenv.config();
 
 let ticket = {}
 
-let mailAttachments = []
+const sendEmail = async (from) => {
 
-const sendEmail = async () => {
-
-  const newTicket = await createTicket(ticket.id)
+  const newTicket = await createTicket(ticket[from].id)
 
   let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
@@ -26,64 +24,64 @@ const sendEmail = async () => {
   let data = {
     from: `"WT ${newTicket.id}" <${process.env.SENDER}>`, // sender address
     to: process.env.RECIEVER, // list of receivers
-    subject: `${ticket.info} | Soporte para ${ticket.problem} | ${ticket.pf}`, // Subject line
-    text: `${ticket.info} | Soporte para ${ticket.problem} | ${ticket.pf}`, // plain text body
+    subject: `${ticket[from].info} | Soporte para ${ticket[from].problem} | ${ticket[from].pf}`, // Subject line
+    text: `${ticket[from].info} | Soporte para ${ticket[from].problem} | ${ticket[from].pf}`, // plain text body
   }
 
-  if(mailAttachments.length !== 0){
-    data.attachments = mailAttachments;
+  if(ticket[from].mailAttachments && ticket[from].mailAttachments.length !== 0){
+    data.attachments = ticket[from].mailAttachments;
   }
 
-  if(ticket.problem === "Despachos CIO" || ticket.problem === 'Servidor'){
+  if(ticket[from].problem === "Despachos CIO" || ticket[from].problem === 'Servidor'){
     data.html = `
     <div>
     <p>Datos del ticket</p>
-    <p>Soporte para: ${ticket.problem}</p>
-    <p>ID Cliente: ${ticket.id}</p>
-    <p>Info Cliente: ${ticket.info}</p>
-    <p>Correo: ${ticket.email}</p>
-    <p>Teléfono que genero el ticket: ${ticket.phone}</p>
-    <p>Punto de facturación / PC: ${ticket.pf}</p>
-    <p>ID TeamViewer: ${ticket.tv}</p>
-    <p>Descripción del problema: ${ticket.description}</p>
-    <p>Urgencia indicada por el cliente: ${ticket.priority}</p>
+    <p>Soporte para: ${ticket[from].problem}</p>
+    <p>ID Cliente: ${ticket[from].id}</p>
+    <p>Info Cliente: ${ticket[from].info}</p>
+    <p>Correo: ${ticket[from].email}</p>
+    <p>Teléfono que genero el ticket: ${ticket[from].phone}</p>
+    <p>Punto de facturación / PC: ${ticket[from].pf}</p>
+    <p>ID TeamViewer: ${ticket[from].tv}</p>
+    <p>Descripción del problema: ${ticket[from].description}</p>
+    <p>Urgencia indicada por el cliente: ${ticket[from].priority}</p>
     <br></br>
     <p>Para generar un ticket de operador: ${process.env.URL_OPTICKET}</p>
     </div>
     ` // html body
-  }else if(ticket.problem === "Sistema SIGES" || ticket.problem === 'Aplicaciones'){
+  }else if(ticket[from].problem === "Sistema SIGES" || ticket[from].problem === 'Aplicaciones'){
     data.html = `
     <div>
     <p>Datos del ticket</p>
-    <p>Soporte para: ${ticket.problem}</p>
-    <p>ID Cliente: ${ticket.id}</p>
-    <p>Info Cliente: ${ticket.info}</p>
-    <p>Correo: ${ticket.email}</p>
-    <p>Teléfono que genero el ticket: ${ticket.phone}</p>
-    <p>Punto de facturación / PC: ${ticket.pf}</p>
-    <p>ID TeamViewer: ${ticket.tv}</p>
-    <p>Origen del problema: ${ticket.type}</p>
-    <p>Descripción del problema: ${ticket.description}</p>
-    <p>Urgencia indicada por el cliente: ${ticket.priority}</p>
+    <p>Soporte para: ${ticket[from].problem}</p>
+    <p>ID Cliente: ${ticket[from].id}</p>
+    <p>Info Cliente: ${ticket[from].info}</p>
+    <p>Correo: ${ticket[from].email}</p>
+    <p>Teléfono que genero el ticket: ${ticket[from].phone}</p>
+    <p>Punto de facturación / PC: ${ticket[from].pf}</p>
+    <p>ID TeamViewer: ${ticket[from].tv}</p>
+    <p>Origen del problema: ${ticket[from].type}</p>
+    <p>Descripción del problema: ${ticket[from].description}</p>
+    <p>Urgencia indicada por el cliente: ${ticket[from].priority}</p>
     <br></br>
     <p>Para generar un ticket de operador: ${process.env.URL_OPTICKET}</p>
     </div>
     ` // html body
-  }else if(ticket.problem === "Libro IVA"){
+  }else if(ticket[from].problem === "Libro IVA"){
     data.html = `
     <div>
     <p>Datos del ticket</p>
-    <p>Soporte para: ${ticket.problem}</p>
-    <p>ID Cliente: ${ticket.id}</p>
-    <p>Info Cliente: ${ticket.info}</p>
-    <p>Correo: ${ticket.email}</p>
-    <p>Teléfono que genero el ticket: ${ticket.phone}</p>
-    <p>Solicitud: ${ticket.type}</p>
-    <p>Período: ${ticket.timeFrame}</p>
-    <p>Punto de facturación / PC: ${ticket.pf}</p>
-    <p>ID TeamViewer: ${ticket.tv}</p>
-    <p>Descripción / Info adicional: ${ticket.description}</p>
-    <p>Urgencia indicada por el cliente: ${ticket.priority}</p>
+    <p>Soporte para: ${ticket[from].problem}</p>
+    <p>ID Cliente: ${ticket[from].id}</p>
+    <p>Info Cliente: ${ticket[from].info}</p>
+    <p>Correo: ${ticket[from].email}</p>
+    <p>Teléfono que genero el ticket: ${ticket[from].phone}</p>
+    <p>Solicitud: ${ticket[from].type}</p>
+    <p>Período: ${ticket[from].timeFrame}</p>
+    <p>Punto de facturación / PC: ${ticket[from].pf}</p>
+    <p>ID TeamViewer: ${ticket[from].tv}</p>
+    <p>Descripción / Info adicional: ${ticket[from].description}</p>
+    <p>Urgencia indicada por el cliente: ${ticket[from].priority}</p>
     <br></br>
     <p>Para generar un ticket de operador: ${process.env.URL_OPTICKET}</p>
     </div>
@@ -93,18 +91,18 @@ const sendEmail = async () => {
     data.html = `
     <div>
     <p>Datos del ticket</p>
-    <p>Soporte para: ${ticket.problem}</p>
-    <p>ID Cliente: ${ticket.id}</p>
-    <p>Info Cliente: ${ticket.info}</p>
-    <p>Correo: ${ticket.email}</p>
-    <p>Teléfono que genero el ticket: ${ticket.phone}</p>
-    <p>Solicitud: ${ticket.type}</p>
-    <p>Punto de facturación / PC: ${ticket.pf}</p>
-    <p>ID TeamViewer: ${ticket.tv}</p>
-    <p>Marca / Modelo: ${ticket.model}</p>
-    <p>Se encuentra conectada / Tipo de conexión: ${ticket.connected}</p>
-    <p>Descripción / Info adicional: ${ticket.description}</p>
-    <p>Urgencia indicada por el cliente: ${ticket.priority}</p>
+    <p>Soporte para: ${ticket[from].problem}</p>
+    <p>ID Cliente: ${ticket[from].id}</p>
+    <p>Info Cliente: ${ticket[from].info}</p>
+    <p>Correo: ${ticket[from].email}</p>
+    <p>Teléfono que genero el ticket: ${ticket[from].phone}</p>
+    <p>Solicitud: ${ticket[from].type}</p>
+    <p>Punto de facturación / PC: ${ticket[from].pf}</p>
+    <p>ID TeamViewer: ${ticket[from].tv}</p>
+    <p>Marca / Modelo: ${ticket[from].model}</p>
+    <p>Se encuentra conectada / Tipo de conexión: ${ticket[from].connected}</p>
+    <p>Descripción / Info adicional: ${ticket[from].description}</p>
+    <p>Urgencia indicada por el cliente: ${ticket[from].priority}</p>
     <br></br>
     <p>Para generar un ticket de operador: ${process.env.URL_OPTICKET}</p>
     </div>
@@ -113,13 +111,15 @@ const sendEmail = async () => {
 
   const mail = await transporter.sendMail(data);
 
+  if(ticket[from].unknown === false && !ticket[from].vip) delete ticket[from]
+
   return newTicket.id
 
   //console.log(mail)
 
 }
 
-const validateUser = async (id) => {
+const validateUser = async (from,id) => {
 
   const config = {
     method: 'get',
@@ -129,9 +129,9 @@ const validateUser = async (id) => {
   const user = await axios(config)
 
   if(user.data.length !== 0){
-    ticket.email = user.data[0].email
-    ticket.info = user.data[0].info
-    ticket.vip = user.data[0].vip
+    ticket[from].email = user.data[0].email
+    ticket[from].info = user.data[0].info
+    ticket[from].vip = user.data[0].vip
     return user.data[0]
   }
   else{
@@ -139,8 +139,14 @@ const validateUser = async (id) => {
   }
 }
 
-const addProps = (props) => {
-    Object.assign(ticket, props);
+const addProps = (from,props) => {
+  if(ticket.hasOwnProperty(from)){
+    Object.assign(ticket[from], props);
+  }
+  else{
+    ticket[from] = {}
+    Object.assign(ticket[from], props);
+  }
 }
 
 const createTicket = async (userId) => {
@@ -159,7 +165,7 @@ const createTicket = async (userId) => {
 
 }
 
-const computers = async (userId) => {
+const computers = async (from,userId) => {
   
   const config = {
     method: 'get',
@@ -168,22 +174,22 @@ const computers = async (userId) => {
 
   const computers = await axios(config).then((i) => i.data)
 
-  ticket.computers = []
+  ticket[from].computers = []
   computers.map( e=> {
-    ticket.computers.push(e)
+    ticket[from].computers.push(e)
   })
 
 }
 
-const computerOptions = async () => {
+const computerOptions = (from) => {
 
-  if(ticket.id !== "No brinda identificador"){
+  if(ticket[from].id !== "No brinda identificador"){
 
     const array = ['Indique el numero de la opcion que corresponda a la computadora que necesita soporte o punto de venta','Si ninguna es correcta coloque el numero 0']
 
     let i = 1;
   
-    ticket.computers.map(e => {
+    ticket[from].computers.map(e => {
       array.push({
         body: `${i} - ${e.alias}`
       })
@@ -202,16 +208,20 @@ const computerOptions = async () => {
 
 }
 
-const computerInfo = (option) => {
+const computerInfo = (from,option) => {
 
-  if(ticket.computers[option-1] && option !== "0"){
-    ticket.pf = ticket.computers[option-1].alias
-    ticket.tv = ticket.computers[option-1].teamviewer_id
+  if(ticket[from].computers[option-1] && option !== "0"){
+    ticket[from].pf = ticket[from].computers[option-1].alias
+    ticket[from].tv = ticket[from].computers[option-1].teamviewer_id
   }
 
 }
 
-const addAudio = async (ctx) => {
+const addAudio = async (from,ctx) => {
+
+  if(!ticket[from].hasOwnProperty("mailAttachments")){
+    ticket[from].mailAttachments = []
+  }
 
   const buffer = await downloadMediaMessage(ctx,'buffer')
 
@@ -219,11 +229,15 @@ const addAudio = async (ctx) => {
     filename: 'adjunto.mp3',
     content: Buffer.from(buffer, 'base64')
   }
-  mailAttachments.push(audio)
+  ticket[from].mailAttachments.push(audio)
 
 }
 
-const addImage = async (ctx) => {
+const addImage = async (from,ctx) => {
+
+  if(!ticket[from].hasOwnProperty("mailAttachments")){
+    ticket[from].mailAttachments = []
+  }
 
   const buffer = await downloadMediaMessage(ctx,'buffer')
 
@@ -231,26 +245,29 @@ const addImage = async (ctx) => {
       filename: 'adjunto.jpg',
       content: Buffer.from(buffer, 'base64')
     }
-    mailAttachments.push(image)
+    ticket[from].mailAttachments.push(image)
 }
 
-const deleteTicketData = () => {
-
-  mailAttachments = []
-  ticket = {}
-
+const deleteTicketData = (from) => {
+  ticket[from] = {}
 }
 
 
-const sendMessage = async (provider) => {
+const sendMessage = async (from,provider) => {
 
-    if(ticket.vip){
-      const telefono = ticket.vip
+    if(!ticket[from].unknown && ticket[from].vip){
+      const telefono = ticket[from].vip
       const prov = provider.getInstance()
-      await prov.sendMessage(telefono,{text:`El cliente ${ticket.info} genero un ticket pidiendo soporte para ${ticket.problem}`})
+      await prov.sendMessage(telefono,{text:`El cliente ${ticket[from].info} genero un ticket pidiendo soporte para ${ticket[from].problem}`})
     }
 
+  delete ticket[from]
+  
+}
+
+const isUnknown = (from) => {
+  return ticket[from].unknown
 }
 
 
-module.exports = {sendEmail,validateUser,addProps,computers,computerOptions,computerInfo,addAudio,addImage,deleteTicketData,sendMessage}
+module.exports = {isUnknown,sendEmail,validateUser,addProps,computers,computerOptions,computerInfo,addAudio,addImage,deleteTicketData,sendMessage}

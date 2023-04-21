@@ -15,21 +15,21 @@ const flujoImpresoraComun = addKeyword('3')
             ctx.body = "Instalar una impresora"
             break;
     }
-    addProps({type: ctx.body})
+    addProps(ctx.from,{type: ctx.body})
 })
 .addAnswer('Indique marca y modelo de la impresora',
 {
     capture: true
 },
 (ctx) => {
-    addProps({model: ctx.body})
+    addProps(ctx.from,{model: ctx.body})
 })
 .addAnswer('La impresora se encuentra conectada ?',
 {
     capture: true
 },
 (ctx) => {
-    addProps({connected: ctx.body})
+    addProps(ctx.from,{connected: ctx.body})
 })
 .addAnswer(['Si desea agregar mas información o alguna descripción lo puede hacer ahora','Escriba algo o envie un AUDIO','De lo contrario escriba NO'],
 {
@@ -37,10 +37,10 @@ const flujoImpresoraComun = addKeyword('3')
 },
 (ctx,{fallBack,flowDynamic}) => {
     if(ctx.message.hasOwnProperty('audioMessage')){
-        addAudio(ctx)
-        addProps({description: "Audio adjuntado"})
+        addAudio(ctx.from,ctx)
+        addProps(ctx.from,{description: "Audio adjuntado"})
     }else if(ctx.message.hasOwnProperty('conversation') || ctx.message.hasOwnProperty('buttonsResponseMessage')){
-        addProps({description: ctx.body})
+        addProps(ctx.from,{description: ctx.body})
     }
     else{
        flowDynamic([{body: "Este campo admite solo audio o texto"},{body:'Escriba algo o envie un AUDIO' }])
@@ -54,7 +54,7 @@ const flujoImpresoraComun = addKeyword('3')
 },
 (ctx,{fallBack,flowDynamic}) => {
     if(ctx.message.hasOwnProperty('imageMessage')){
-        addImage(ctx)
+        addImage(ctx.from,ctx)
     }else if (ctx.message.hasOwnProperty('conversation') || ctx.message.hasOwnProperty('buttonsResponseMessage')){
         // descartamos que sea texto
     }else{
@@ -83,15 +83,15 @@ async (ctx,{flowDynamic}) =>{
             ctx.body = "No especifica"
         break;
     }
-    addProps({priority: ctx.body})
+    addProps(ctx.from,{priority: ctx.body})
 })
 .addAnswer(['Seleccione la opcion deseada','1. Enviar ticket','2. Cancelar ticket'],{
     capture: true
 },
 async (ctx,{endFlow,provider}) =>{
     if(ctx.body === '1') {
-        const ticket = await sendEmail()
-        await sendMessage(provider)
+        const ticket = await sendEmail(ctx.from)
+        await sendMessage(ctx.from,provider)
         if(!ticket){
             return endFlow({body: `Ticket generado exitosamente. Gracias por comunicarse con nosotros.`})
         }
