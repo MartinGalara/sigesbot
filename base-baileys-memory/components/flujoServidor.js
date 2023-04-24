@@ -1,6 +1,6 @@
 const { addKeyword } = require('@bot-whatsapp/bot')
 
-const {sendEmail,addProps,addAudio,addImage,sendMessage} = require('./utils.js')
+const {tvInDb,sendEmail,addProps,addAudio,addImage,sendMessage} = require('./utils.js')
 
 const flujoServidor = addKeyword('7')
 .addAnswer('Describa el problema por escrito o adjunte un AUDIO',

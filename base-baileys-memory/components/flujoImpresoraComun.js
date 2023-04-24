@@ -1,6 +1,6 @@
 const { addKeyword } = require('@bot-whatsapp/bot')
 
-const {sendEmail,addProps,addAudio,addImage,sendMessage} = require('./utils.js')
+const {tvInDb,sendEmail,addProps,addAudio,addImage,sendMessage} = require('./utils.js')
 
 const flujoImpresoraComun = addKeyword('4')
 .addAnswer(['Elija la opcion deseada','1. Soporte para impresora','2. Instalar una impresora'],{

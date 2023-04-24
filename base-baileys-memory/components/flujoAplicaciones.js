@@ -1,6 +1,6 @@
 const { addKeyword } = require('@bot-whatsapp/bot')
 
-const {sendEmail,addProps,addAudio,addImage,sendMessage} = require('./utils.js')
+const {tvInDb,sendEmail,addProps,addAudio,addImage,sendMessage} = require('./utils.js')
 
 const flujoAplicaciones = addKeyword('2')
 .addAnswer(['Elija en que aplicación esta teniendo el inconveniente','1. App YPF','2. Mercado Pago'],

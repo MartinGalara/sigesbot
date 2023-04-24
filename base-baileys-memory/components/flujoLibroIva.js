@@ -1,6 +1,6 @@
 const { addKeyword } = require('@bot-whatsapp/bot')
 
-const {sendEmail,addProps,addAudio,addImage,sendMessage} = require('./utils.js')
+const {tvInDb,sendEmail,addProps,addAudio,addImage,sendMessage} = require('./utils.js')
 
 const flujoLibroIva = addKeyword('6')
 .addAnswer(['Elija donde se encuentra el inconveniente',"1. Libro IVA Compra","2. Libro IVA Venta"],
