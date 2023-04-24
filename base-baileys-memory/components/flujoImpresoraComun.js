@@ -3,7 +3,7 @@ const { addKeyword } = require('@bot-whatsapp/bot')
 const {sendEmail,addProps,addAudio,addImage,sendMessage} = require('./utils.js')
 
 const flujoImpresoraComun = addKeyword('4')
-.addAnswer(['Seleccione la opcion deseada','1. Soporte para impresora','2. Instalar una impresora'],{
+.addAnswer(['Elija la opcion deseada','1. Soporte para impresora','2. Instalar una impresora'],{
     capture: true
 },
 (ctx) => {
@@ -21,7 +21,7 @@ const flujoImpresoraComun = addKeyword('4')
 {
     capture: true
 },
-(ctx,{fallBack,flowDynamic}) => {
+async (ctx,{fallBack,flowDynamic,provider}) => {
     if(ctx.message.hasOwnProperty('audioMessage')){
         addAudio(ctx.from,ctx)
         addProps(ctx.from,{description: "Audio adjuntado"})
@@ -29,12 +29,47 @@ const flujoImpresoraComun = addKeyword('4')
         addProps(ctx.from,{description: ctx.body})
     }
     else{
-       flowDynamic([{body: "Este campo admite solo audio o texto"},{body:'Escriba algo o envie un AUDIO' }])
+       flowDynamic([{body: "Este campo admite solo audio o texto"}])
+       return fallBack()
+    }
+
+    if(!tvInDb(ctx.from)){
+        const prov = provider.getInstance()
+        await prov.sendMessage(`${ctx.from}@s.whatsapp.net`,{text:`Si es posible, en esta sección adjunte una foto con la ID y contraseña de Team Viewer`})
+    }
+    
+})
+.addAnswer(['Si desea, puede adjuntar hasta 3 fotos','Adjunte la foto 1','De lo contrario envíe "0".'],
+{
+    capture: true
+},
+(ctx,{fallBack,flowDynamic}) => {
+    if(ctx.message.hasOwnProperty('imageMessage')){
+        addImage(ctx.from,ctx)
+    }else if (ctx.message.hasOwnProperty('conversation') || ctx.message.hasOwnProperty('buttonsResponseMessage')){
+        // descartamos que sea texto
+    }else{
+       flowDynamic([{body: "Este campo admite solo imagen o texto"}])
        return fallBack()
     }
     
 })
-.addAnswer(['Si desea enviar una foto aquí lo puede hacer.','De lo contrario escriba "NO".'],
+.addAnswer(['Adjunte la foto 2','De lo contrario envíe "0".'],
+{
+    capture: true
+},
+(ctx,{fallBack,flowDynamic}) => {
+    if(ctx.message.hasOwnProperty('imageMessage')){
+        addImage(ctx.from,ctx)
+    }else if (ctx.message.hasOwnProperty('conversation') || ctx.message.hasOwnProperty('buttonsResponseMessage')){
+        // descartamos que sea texto
+    }else{
+       flowDynamic([{body: "Este campo admite solo imagen o texto"}])
+       return fallBack()
+    }
+    
+})
+.addAnswer(['Adjunte la foto 3','De lo contrario envíe "0".'],
 {
     capture: true
 },
@@ -59,11 +94,9 @@ async (ctx,{flowDynamic}) =>{
             break;
         case "2":
             ctx.body = "Medio"
-            flowDynamic([{body:`Si es fin de semana, luego de generar el ticket, comuniquese al nuevo telefono de guardia: ${process.env.GUARDIA}`}])
             break;
         case "3":
             ctx.body = "Alto"
-            flowDynamic([{body:`Si es fin de semana, luego de generar el ticket, comuniquese al nuevo telefono de guardia: ${process.env.GUARDIA}`}])
             break;
         case "4":
             ctx.body = "No especifica"
@@ -71,20 +104,26 @@ async (ctx,{flowDynamic}) =>{
     }
     addProps(ctx.from,{priority: ctx.body})
 })
-.addAnswer(['Seleccione la opcion deseada','1. Enviar ticket','2. Cancelar ticket'],{
+.addAnswer(['Elija la opcion deseada','1. Enviar ticket','2. Cancelar ticket'],{
     capture: true
 },
 async (ctx,{endFlow,provider}) =>{
     if(ctx.body === '1') {
         const ticket = await sendEmail(ctx.from)
-        await sendMessage(ctx.from,provider)
-        if(!ticket){
-            return endFlow({body: `Ticket generado exitosamente. Gracias por comunicarse con nosotros.`})
+
+        if(ticket){
+            const prov = provider.getInstance()
+            await prov.sendMessage(`${ctx.from}@s.whatsapp.net`,{text:`Tu numero de ticket es ${ticket}.`})
+        }else{
+            const prov = provider.getInstance()
+            await prov.sendMessage(`${ctx.from}@s.whatsapp.net`,{text:`Ticket generado exitosamente.`})
         }
-        return endFlow({body: `Tu numero de ticket es ${ticket}. Gracias por comunicarse con nosotros.`})
+        await sendMessage(ctx.from,provider)
+       
+        return endFlow({body: `Gracias por comunicarse con nosotros.`})
     }
     else{
-        return endFlow({body: 'Se cancelo el envio del ticket. Escriba "Inicio" para volver a comenzar'
+        return endFlow({body: 'Se cancelo el envio del ticket. Escriba "sigesbot" para volver a comenzar'
         })
     }
 })

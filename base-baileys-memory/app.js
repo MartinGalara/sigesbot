@@ -18,13 +18,13 @@ const flujoServidor = require('./components/flujoServidor.js')
 const flujoLibroIva = require('./components/flujoLibroIva.js')
 const flujoAplicaciones = require('./components/flujoAplicaciones.js')
 
-const {isUnknown,addProps,deleteTicketData,validateUser,computers,computerOptions,computerInfo,sendMessage} = require('./components/utils.js')
+const {getBandera,isUnknown,addProps,deleteTicketData,validateUser,computers,computerOptions,computerInfo,sendMessage} = require('./components/utils.js')
 
 const opcionesProblema = ['Despachos CIO','Aplicaciones','Impresora Fiscal / Comandera','Impresora Común / Oficina','Sistema SIGES','Libro IVA','Servidor']
 
 const saludo = ['Gracias por comunicarte con Sistema SIGES.','Elija el numero de la opción deseada',`1. Generar un ticket de soporte`,'2. Salir']
 
-const opciones = ['Indique el numero de la opción correspondiente al servicio en el que necesita soporte','1. Despachos CIO','2. Aplicaciones','3. Impresora Fiscal / Comandera','4. Impresora Común / Oficina','5. Sistema SIGES','6. Libro IVA','7. Servidor']
+const opciones = ['Elija el numero del problema que tiene','1. Despachos CIO','2. Aplicaciones','3. Impresora Fiscal / Comandera','4. Impresora Común / Oficina','5. Sistema SIGES','6. Libro IVA','7. Servidor']
 
 const objOpciones = {
     1: "Despachos CIO",
@@ -38,77 +38,97 @@ const objOpciones = {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const flujoPrincipal = addKeyword(['botbot'])
+const flujoPrincipal = addKeyword(['sigesbot'])
 .addAnswer(saludo,
 {
     capture: true
 },
-(ctx,{endFlow}) => {
+(ctx,{endFlow,fallBack}) => {
     deleteTicketData(ctx.from)
     if(ctx.body === '2'){
-        return endFlow({body: `Escriba "Inicio" para volver a comenzar`})
+        return endFlow({body: `Escriba "sigesbot" para volver a comenzar`})
     }
     if(ctx.body !== '1'){
-        return endFlow({body: '❌ Respuesta invalida ❌ Escriba "Inicio" para volver a comenzar'
-        })
+        return fallBack();
     }
 })
-.addAnswer(["Elija para qué necesita soporte","1. YPF (Estación)","2. SHELL (Estación)","3. AXION (Estación)","4. PUMA (Estación)","5. GULF (Estación)","6. REFINOR (Estación)","7. BLANCA (Estación)","8. SHOP","9. OTRO"],
+.addAnswer(["Elija desde donde necesita soporte","1. YPF","2. SHELL","3. AXION","4. PUMA","5. GULF","6. REFINOR","7. EST. BLANCA","8. OTRO"],
+    {
+        capture: true
+    },
+    (ctx,{fallBack}) => {
+       switch (ctx.body) {
+        case "1": 
+            addProps(ctx.from,{bandera: "YP"})
+            break;
+        case "2": 
+            addProps(ctx.from,{bandera: "SH"})
+            break;
+        case "3": 
+            addProps(ctx.from,{bandera: "AX"})
+            break;
+        case "4": 
+            addProps(ctx.from,{bandera: "PU"})
+            break;
+        case "5": 
+            addProps(ctx.from,{bandera: "GU"})
+            break;
+        case "6": 
+            addProps(ctx.from,{bandera: "RE"})
+            break;   
+        case "7": 
+            addProps(ctx.from,{bandera: "BL"})
+            break;
+        case "8": 
+            addProps(ctx.from,{bandera: "OT"})
+            break;
+       
+        default:
+            return fallBack();
+       }
+    })
+.addAnswer(["Elija en que area se encuentra el puesto de trabajo donde necesita soporte","1. Playa","2. Tienda","3. Boxes","4. Administracion"],
     {
         capture: true
     },
     (ctx,{flowDynamic,fallBack}) => {
        switch (ctx.body) {
         case "1": 
-            flowDynamic([{body: "Ingrese su numero de APIES"}])
+            addProps(ctx.from,{zone: "P"})
             break;
         case "2": 
-            flowDynamic([{body: "Ingrese su numero de identificacion SHELL"}])
+            addProps(ctx.from,{zone: "T"})
             break;
         case "3": 
-            flowDynamic([{body: "Ingrese su numero de identificacion AXION"}])
+            addProps(ctx.from,{zone: "B"})
             break;
         case "4": 
-            flowDynamic([{body: "Ingrese su numero de identificacion PUMA"}])
+            addProps(ctx.from,{zone: "A"})
             break;
-        case "5": 
-            flowDynamic([{body: "Ingrese su numero de identificacion GULF"}])
-            break;
-        case "6": 
-            flowDynamic([{body: "Ingrese su numero de identificacion REFINOR"}])
-            break;   
-        case "7": 
-            flowDynamic([{body: "Ingrese su numero de identificacion"}])
-            break;
-        case "8": 
-            flowDynamic([{body: "Ingrese su numero de identificacion"}])
-            break;
-        case "9": 
-            flowDynamic([{body: "Ingrese su numero de identificacion"}])
-            break;
-       
+
         default:
             return fallBack();
-            break;
        }
+    flowDynamic(getBandera(ctx.from))
     })
 .addAnswer(['Si no lo conoce envie "0"'],
 {
     capture: true
 },
-async (ctx, {flowDynamic,endFlow}) => {
+async (ctx, {flowDynamic,fallBack,provider}) => {
     let id = ctx.body
 
 if(id !== "0"){
     const user = await validateUser(ctx.from,id)
     if(!user){
-        return endFlow({body: '❌ ID invalido ❌ Escriba "Inicio" para volver a comenzar'
-        })
+        const prov = provider.getInstance()
+        await prov.sendMessage(`${ctx.from}@s.whatsapp.net`,{text:`Número invalido`})
+        return fallBack();
     }
     addProps(ctx.from,{unknown: false})
     addProps(ctx.from,{id: id})
     addProps(ctx.from,{phone: ctx.from})
-    await computers(ctx.from,id)
+    await computers(ctx.from)
     const pcs = computerOptions(ctx.from);
     setTimeout(()=> {
         flowDynamic(pcs)
@@ -116,6 +136,7 @@ if(id !== "0"){
 }else{
     addProps(ctx.from,{unknown: true})
     addProps(ctx.from,{id: "No brinda identificador"})
+    addProps(ctx.from,{userId: "No brinda identificador"})
     addProps(ctx.from,{email: "No brinda identificador"})
     addProps(ctx.from,{tv: "No brinda identificador"})
     addProps(ctx.from,{pf: "No brinda identificador"})
@@ -131,7 +152,7 @@ if(id !== "0"){
 {
     capture: true
 },
-async (ctx) => {
+async (ctx,{provider}) => {
 
     if(!isUnknown(ctx.from)){
         const pcs = computerOptions(ctx.from);
@@ -153,14 +174,13 @@ async (ctx) => {
 {
     capture:true
 },
-(ctx, {endFlow}) => {
+(ctx, {endFlow,fallBack}) => {
 
     const selected = ctx.body
     ctx.body = objOpciones[selected]
-    if(!opcionesProblema.includes(ctx.body)) {
-        return endFlow({body: '❌ Respuesta invalida ❌ Escriba "Inicio" para volver a comenzar' 
-        })
-    }
+
+    if(!opcionesProblema.includes(ctx.body)) return fallBack()
+
     addProps(ctx.from,{problem: ctx.body})
 },
 [flujoSiges,flujoImpresoraFiscal,flujoImpresoraComun,flujoDespachosCio,flujoServidor,flujoLibroIva,flujoAplicaciones])

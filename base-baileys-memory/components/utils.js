@@ -9,7 +9,8 @@ let ticket = {}
 
 const sendEmail = async (from) => {
 
-  const newTicket = await createTicket(ticket[from].id)
+  console.log(ticket)
+  const newTicket = await createTicket(ticket[from].userId)
 
   let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
@@ -37,7 +38,7 @@ const sendEmail = async (from) => {
     <div>
     <p>Datos del ticket</p>
     <p>Soporte para: ${ticket[from].problem}</p>
-    <p>ID Cliente: ${ticket[from].id}</p>
+    <p>ID Cliente: ${ticket[from].userId}</p>
     <p>Info Cliente: ${ticket[from].info}</p>
     <p>Correo: ${ticket[from].email}</p>
     <p>Teléfono que genero el ticket: ${ticket[from].phone}</p>
@@ -54,7 +55,7 @@ const sendEmail = async (from) => {
     <div>
     <p>Datos del ticket</p>
     <p>Soporte para: ${ticket[from].problem}</p>
-    <p>ID Cliente: ${ticket[from].id}</p>
+    <p>ID Cliente: ${ticket[from].userId}</p>
     <p>Info Cliente: ${ticket[from].info}</p>
     <p>Correo: ${ticket[from].email}</p>
     <p>Teléfono que genero el ticket: ${ticket[from].phone}</p>
@@ -72,7 +73,7 @@ const sendEmail = async (from) => {
     <div>
     <p>Datos del ticket</p>
     <p>Soporte para: ${ticket[from].problem}</p>
-    <p>ID Cliente: ${ticket[from].id}</p>
+    <p>ID Cliente: ${ticket[from].userId}</p>
     <p>Info Cliente: ${ticket[from].info}</p>
     <p>Correo: ${ticket[from].email}</p>
     <p>Teléfono que genero el ticket: ${ticket[from].phone}</p>
@@ -92,15 +93,13 @@ const sendEmail = async (from) => {
     <div>
     <p>Datos del ticket</p>
     <p>Soporte para: ${ticket[from].problem}</p>
-    <p>ID Cliente: ${ticket[from].id}</p>
+    <p>ID Cliente: ${ticket[from].userId}</p>
     <p>Info Cliente: ${ticket[from].info}</p>
     <p>Correo: ${ticket[from].email}</p>
     <p>Teléfono que genero el ticket: ${ticket[from].phone}</p>
     <p>Solicitud: ${ticket[from].type}</p>
     <p>Punto de facturación / PC: ${ticket[from].pf}</p>
     <p>ID TeamViewer: ${ticket[from].tv}</p>
-    <p>Marca / Modelo: ${ticket[from].model}</p>
-    <p>Se encuentra conectada / Tipo de conexión: ${ticket[from].connected}</p>
     <p>Descripción / Info adicional: ${ticket[from].description}</p>
     <p>Urgencia indicada por el cliente: ${ticket[from].priority}</p>
     <br></br>
@@ -119,9 +118,13 @@ const sendEmail = async (from) => {
 
 const validateUser = async (from,id) => {
 
+const fullId = ticket[from].bandera + id
+
+addProps(from,{userId: fullId})
+
   const config = {
     method: 'get',
-    url: `${process.env.SERVER_URL}/users?id=${id}`,
+    url: `${process.env.SERVER_URL}/users?id=${fullId}`,
 }
 
   const user = await axios(config)
@@ -163,11 +166,11 @@ const createTicket = async (userId) => {
 
 }
 
-const computers = async (from,userId) => {
+const computers = async (from) => {
   
   const config = {
     method: 'get',
-    url: `${process.env.SERVER_URL}/computers?userId=${userId}`,
+    url: `${process.env.SERVER_URL}/computers?userId=${ticket[from].userId}&zone=${ticket[from].zone}`,
   }
 
   const computers = await axios(config).then((i) => i.data)
@@ -183,15 +186,19 @@ const computerOptions = (from) => {
 
   if(ticket[from].id !== "No brinda identificador"){
 
-    const array = ['Elija el número del puesto de trabajo donde necesita soporte','Si ninguno es correcto, envíe "0"']
+    if(ticket[from].computers.length === 0) return ['No se encontraron puestos de trabajo registrados en esta zona','Envie 0 para continuar']
+
+    const array = ['Elija el número del puesto de trabajo donde necesita soporte','Si no lo sabe o ninguno es correcto, envíe "0"']
 
     let i = 1;
   
     ticket[from].computers.map(e => {
+
       array.push({
         body: `${i} - ${e.alias}`
       })
       i++;
+      
     })
   
     return array;
@@ -244,6 +251,8 @@ const addImage = async (from,ctx) => {
       content: Buffer.from(buffer, 'base64')
     }
     ticket[from].mailAttachments.push(image)
+
+    console.log(ticket)
 }
 
 const deleteTicketData = (from) => {
@@ -256,7 +265,8 @@ const sendMessage = async (from,provider) => {
     if(!ticket[from].unknown && ticket[from].vip){
       const telefono = ticket[from].vip
       const prov = provider.getInstance()
-      await prov.sendMessage(telefono,{text:`El cliente ${ticket[from].info} genero un ticket pidiendo soporte para ${ticket[from].problem}`})
+      await prov.sendMessage(`${from}@s.whatsapp.net`,{text:`Tu ejecutivo de cuenta ya fue notificado del problema`})
+      await prov.sendMessage(telefono,{text:`El cliente ${ticket[from].info} genero un ticket pidiendo soporte para ${ticket[from].problem}. Nivel de urgencia: ${ticket[from].priority}`})
     }
 
   delete ticket[from]
@@ -267,5 +277,48 @@ const isUnknown = (from) => {
   return ticket[from].unknown
 }
 
+const getBandera = (from) => {
 
-module.exports = {isUnknown,sendEmail,validateUser,addProps,computers,computerOptions,computerInfo,addAudio,addImage,deleteTicketData,sendMessage}
+  switch (ticket[from].bandera){
+
+        case "YP": 
+            return [{body: "Ingrese su numero de APIES"}]
+
+        case "SH": 
+            return [{body: "Ingrese su numero de identificacion SHELL"}]
+
+        case "AX": 
+            return [{body: "Ingrese su numero de identificacion AXION"}]
+
+        case "PU": 
+            return [{body: "Ingrese su numero de identificacion PUMA"}]
+
+        case "GU": 
+           return [{body: "Ingrese su numero de identificacion GULF"}]
+
+        case "RE": 
+            return [{body: "Ingrese su numero de identificacion REFINOR"}]
+
+        case "BL": 
+            return [{body: "Ingrese su numero de identificacion"}]
+
+        case "OT": 
+            return [{body: "Ingrese su numero de identificacion"}]
+
+        default:
+          return
+
+  }
+
+}
+
+const tvInDb = (from) => {
+  if(ticket[from].tv === "Consultar al cliente tv e indentificador de PC y reportarlo"){
+    return false
+  }else{
+    return true
+  }
+}
+
+
+module.exports = {tvInDb,getBandera,isUnknown,sendEmail,validateUser,addProps,computers,computerOptions,computerInfo,addAudio,addImage,deleteTicketData,sendMessage}
