@@ -252,7 +252,6 @@ const addImage = async (from,ctx) => {
     }
     ticket[from].mailAttachments.push(image)
 
-    console.log(ticket)
 }
 
 const deleteTicketData = (from) => {
