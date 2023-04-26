@@ -25,6 +25,7 @@ const sendEmail = async (from) => {
   let data = {
     from: `"WT ${newTicket.id}" <${process.env.SENDER}>`, // sender address
     to: process.env.RECIEVER, // list of receivers
+    cc: ticket[from].vipmail,
     subject: `${ticket[from].info} | Soporte para ${ticket[from].problem} | ${ticket[from].pf}`, // Subject line
     text: `${ticket[from].info} | Soporte para ${ticket[from].problem} | ${ticket[from].pf}`, // plain text body
   }
@@ -133,6 +134,7 @@ addProps(from,{userId: fullId})
     ticket[from].email = user.data[0].email
     ticket[from].info = user.data[0].info
     ticket[from].vip = user.data[0].vip
+    ticket[from].vipmail = user.data[0].vipmail
     return user.data[0]
   }
   else{
@@ -174,6 +176,12 @@ const computers = async (from) => {
   }
 
   const computers = await axios(config).then((i) => i.data)
+
+  computers.sort((a, b) => {
+    if (a.alias < b.alias) return -1;
+    if (a.alias > b.alias) return 1;
+    return 0;
+  });
 
   ticket[from].computers = []
   computers.map( e=> {
@@ -259,13 +267,26 @@ const deleteTicketData = (from) => {
 }
 
 
-const sendMessage = async (from,provider) => {
+const sendMessage = async (from,provider,ticketId) => {
+
+  let prov = provider.getInstance()
+
+  const today = new Date();
+  const dayOfWeek = today.getDay();
+  const hourOfDay = today.getHours();
+  const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6 || (dayOfWeek === 5 && hourOfDay >= 20) || (dayOfWeek === 1 && hourOfDay < 6));
+
+  if (isWeekend) {
+    const telefono = process.env.GUARDIA + '@s.whatsapp.net'
+    await prov.sendMessage(telefono,{text:`WT: ${ticketId} - El cliente ${ticket[from].info} genero un ticket pidiendo soporte para ${ticket[from].zone} / ${ticket[from].problem}. Nivel de urgencia: ${ticket[from].priority}`})
+  }
 
     if(!ticket[from].unknown && ticket[from].vip){
-      const telefono = ticket[from].vip
-      const prov = provider.getInstance()
+      
       await prov.sendMessage(`${from}@s.whatsapp.net`,{text:`Tu ejecutivo de cuenta ya fue notificado del problema`})
-      await prov.sendMessage(telefono,{text:`El cliente ${ticket[from].info} genero un ticket pidiendo soporte para ${ticket[from].problem}. Nivel de urgencia: ${ticket[from].priority}`})
+
+      const telefono = ticket[from].vip
+      await prov.sendMessage(telefono,{text:`El cliente ${ticket[from].info} genero un ticket pidiendo soporte para ${ticket[from].zone} / ${ticket[from].problem}. Nivel de urgencia: ${ticket[from].priority}`})
     }
 
   delete ticket[from]

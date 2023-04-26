@@ -10,7 +10,7 @@ const flujoDespachosCio = addKeyword('1')
 async (ctx,{fallBack,flowDynamic,provider}) => {
     if(ctx.message.hasOwnProperty('audioMessage')){
         addAudio(ctx.from,ctx)
-        addProps(ctx.from,{description: "Audio adjuntado"})
+        addProps(ctx.from,{description: "Audio adjuntado"}) 
     }else if(ctx.message.hasOwnProperty('conversation') || ctx.message.hasOwnProperty('buttonsResponseMessage')){
         addProps(ctx.from,{description: ctx.body})
     }
@@ -104,7 +104,7 @@ async (ctx,{endFlow,provider}) =>{
             const prov = provider.getInstance()
             await prov.sendMessage(`${ctx.from}@s.whatsapp.net`,{text:`Ticket generado exitosamente.`})
         }
-        await sendMessage(ctx.from,provider)
+        await sendMessage(ctx.from,provider,ticket)
        
         return endFlow({body: `Gracias por comunicarse con nosotros.`})
     }

@@ -44,6 +44,7 @@ const flujoPrincipal = addKeyword(['sigesbot'])
     capture: true
 },
 (ctx,{endFlow,fallBack}) => {
+
     deleteTicketData(ctx.from)
     if(ctx.body === '2'){
         return endFlow({body: `Escriba "sigesbot" para volver a comenzar`})
@@ -174,16 +175,18 @@ async (ctx,{provider}) => {
 {
     capture:true
 },
-(ctx, {endFlow,fallBack}) => {
+(ctx, {fallBack}) => {
 
     const selected = ctx.body
     ctx.body = objOpciones[selected]
 
     if(!opcionesProblema.includes(ctx.body)) return fallBack()
 
-    addProps(ctx.from,{problem: ctx.body})
+    addProps(ctx.from,{problem: ctx.body}) 
+
 },
 [flujoSiges,flujoImpresoraFiscal,flujoImpresoraComun,flujoDespachosCio,flujoServidor,flujoLibroIva,flujoAplicaciones])
+
 
 const asd = addKeyword(['asdasd'])
 .addAnswer(['enviar mensaje'],
@@ -191,6 +194,9 @@ const asd = addKeyword(['asdasd'])
     capture: true
 },
 async (ctx,{provider}) => {
+
+    const prov = provider.getInstance()
+    console.log(prov)
 
 })
 

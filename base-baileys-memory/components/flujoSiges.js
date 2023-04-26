@@ -129,7 +129,7 @@ async (ctx,{endFlow,provider}) =>{
             const prov = provider.getInstance()
             await prov.sendMessage(`${ctx.from}@s.whatsapp.net`,{text:`Ticket generado exitosamente.`})
         }
-        await sendMessage(ctx.from,provider)
+        await sendMessage(ctx.from,provider,ticket)
        
         return endFlow({body: `Gracias por comunicarse con nosotros.`})
     }

@@ -3,7 +3,7 @@ const { addKeyword } = require('@bot-whatsapp/bot')
 const {tvInDb,sendEmail,addProps,addAudio,addImage,sendMessage} = require('./utils.js')
 
 const flujoAplicaciones = addKeyword('2')
-.addAnswer(['Elija en que aplicación esta teniendo el inconveniente','1. App YPF','2. Mercado Pago'],
+.addAnswer(['Elija en que aplicación esta teniendo el inconveniente','1. App YPF','2. Mercado Pago','3. Todas las aplicaciones'],
 {
     capture: true
 },
@@ -14,6 +14,9 @@ const flujoAplicaciones = addKeyword('2')
             break;
         case "2":
             ctx.body = "Instalar una Mercado Pago"
+            break;
+        case "3":
+            ctx.body = "Todas las aplicaciones"
             break;
     }
     addProps(ctx.from,{type: ctx.body})
@@ -119,7 +122,7 @@ async (ctx,{endFlow,provider}) =>{
             const prov = provider.getInstance()
             await prov.sendMessage(`${ctx.from}@s.whatsapp.net`,{text:`Ticket generado exitosamente.`})
         }
-        await sendMessage(ctx.from,provider)
+        await sendMessage(ctx.from,provider,ticket)
        
         return endFlow({body: `Gracias por comunicarse con nosotros.`}) 
     }
