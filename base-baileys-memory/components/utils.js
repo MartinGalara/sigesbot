@@ -12,6 +12,13 @@ const sendEmail = async (from) => {
   console.log(ticket)
   const newTicket = await createTicket(ticket[from].userId)
 
+  let reciever = ""
+  if(ticket[from].userId === "YPtest" || ticket[from].userId === "YP31177"){
+    reciever = process.env.TESTINGMAIL
+  }else{
+    reciever = process.env.RECIEVER
+  }
+
   let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
@@ -24,7 +31,7 @@ const sendEmail = async (from) => {
 
   let data = {
     from: `"WT ${newTicket.id}" <${process.env.SENDER}>`, // sender address
-    to: process.env.RECIEVER, // list of receivers
+    to: reciever, // list of receivers
     cc: ticket[from].vipmail,
     subject: `${ticket[from].info} | Soporte para ${ticket[from].problem} | ${ticket[from].pf}`, // Subject line
     text: `${ticket[from].info} | Soporte para ${ticket[from].problem} | ${ticket[from].pf}`, // plain text body
@@ -271,6 +278,26 @@ const sendMessage = async (from,provider,ticketId) => {
 
   let prov = provider.getInstance()
 
+  let zone = ""
+
+  switch(ticket[from].zone){
+    case "P":
+      zone = "Playa"
+      break;
+      
+    case "B":
+      zone = "Boxes"
+      break;
+
+    case "A":
+      zone = "Administracion"
+      break;
+
+    case "T":
+      zone = "Tienda"
+      break;
+  }
+
   const today = new Date();
   const dayOfWeek = today.getDay();
   const hourOfDay = today.getHours();
@@ -278,16 +305,16 @@ const sendMessage = async (from,provider,ticketId) => {
 
   if (isWeekend) {
     const telefono = process.env.GUARDIA + '@s.whatsapp.net'
-    await prov.sendMessage(telefono,{text:`WT: ${ticketId} - El cliente ${ticket[from].info} genero un ticket pidiendo soporte para ${ticket[from].zone} / ${ticket[from].problem}. Nivel de urgencia: ${ticket[from].priority}`})
+    await prov.sendMessage(telefono,{text:`WT: ${ticketId} - El cliente ${ticket[from].info} genero un ticket pidiendo soporte para ${zone} - ${ticket[from].problem}. Nivel de urgencia: ${ticket[from].priority}`})
   }
 
-    if(!ticket[from].unknown && ticket[from].vip){
+  if(!ticket[from].unknown && ticket[from].vip){
       
-      await prov.sendMessage(`${from}@s.whatsapp.net`,{text:`Tu ejecutivo de cuenta ya fue notificado del problema`})
+    await prov.sendMessage(`${from}@s.whatsapp.net`,{text:`Tu ejecutivo de cuenta ya fue notificado del problema`})
 
-      const telefono = ticket[from].vip
-      await prov.sendMessage(telefono,{text:`El cliente ${ticket[from].info} genero un ticket pidiendo soporte para ${ticket[from].zone} / ${ticket[from].problem}. Nivel de urgencia: ${ticket[from].priority}`})
-    }
+    const telefono = ticket[from].vip
+    await prov.sendMessage(telefono,{text:`El cliente ${ticket[from].info} genero un ticket pidiendo soporte para ${zone} - ${ticket[from].problem}. Nivel de urgencia: ${ticket[from].priority}`})
+  }
 
   delete ticket[from]
 
