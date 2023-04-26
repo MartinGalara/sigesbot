@@ -188,7 +188,7 @@ async (ctx,{provider}) => {
 [flujoSiges,flujoImpresoraFiscal,flujoImpresoraComun,flujoDespachosCio,flujoServidor,flujoLibroIva,flujoAplicaciones])
 
 
-const asd = addKeyword(['asdasd'])
+const asd = addKeyword(['asd'])
 .addAnswer(['enviar mensaje'],
 {
     capture: true
