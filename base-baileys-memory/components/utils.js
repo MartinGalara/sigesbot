@@ -9,8 +9,9 @@ let ticket = {}
 
 const sendEmail = async (from) => {
 
-  console.log(ticket)
   const newTicket = await createTicket(ticket[from].userId)
+
+  await getStaff(from)
 
   let reciever = ""
   if(ticket[from].userId === "YPtest" || ticket[from].userId === "YP31177"){
@@ -29,12 +30,22 @@ const sendEmail = async (from) => {
     },
   });
 
+  let replyTo = ticket[from].staff.mails.join(', ')
+
+  if(ticket[from].vipmail){
+    if(replyTo === ''){
+      replyTo = ticket[from].vipmail
+    }else{
+      replyTo = replyTo + ', ' + ticket[from].vipmail
+    }
+  }
+
   let data = {
     from: `"WT ${newTicket.id}" <${process.env.SENDER}>`, // sender address
     to: reciever, // list of receivers
-    cc: ticket[from].vipmail,
     subject: `${ticket[from].info} | Soporte para ${ticket[from].problem} | ${ticket[from].pf}`, // Subject line
     text: `${ticket[from].info} | Soporte para ${ticket[from].problem} | ${ticket[from].pf}`, // plain text body
+    replyTo: replyTo
   }
 
   if(ticket[from].mailAttachments && ticket[from].mailAttachments.length !== 0){
@@ -48,7 +59,6 @@ const sendEmail = async (from) => {
     <p>Soporte para: ${ticket[from].problem}</p>
     <p>ID Cliente: ${ticket[from].userId}</p>
     <p>Info Cliente: ${ticket[from].info}</p>
-    <p>Correo: ${ticket[from].email}</p>
     <p>Teléfono que genero el ticket: ${ticket[from].phone}</p>
     <p>Punto de facturación / PC: ${ticket[from].pf}</p>
     <p>ID TeamViewer: ${ticket[from].tv}</p>
@@ -65,7 +75,6 @@ const sendEmail = async (from) => {
     <p>Soporte para: ${ticket[from].problem}</p>
     <p>ID Cliente: ${ticket[from].userId}</p>
     <p>Info Cliente: ${ticket[from].info}</p>
-    <p>Correo: ${ticket[from].email}</p>
     <p>Teléfono que genero el ticket: ${ticket[from].phone}</p>
     <p>Punto de facturación / PC: ${ticket[from].pf}</p>
     <p>ID TeamViewer: ${ticket[from].tv}</p>
@@ -83,7 +92,6 @@ const sendEmail = async (from) => {
     <p>Soporte para: ${ticket[from].problem}</p>
     <p>ID Cliente: ${ticket[from].userId}</p>
     <p>Info Cliente: ${ticket[from].info}</p>
-    <p>Correo: ${ticket[from].email}</p>
     <p>Teléfono que genero el ticket: ${ticket[from].phone}</p>
     <p>Solicitud: ${ticket[from].type}</p>
     <p>Período: ${ticket[from].timeFrame}</p>
@@ -103,7 +111,6 @@ const sendEmail = async (from) => {
     <p>Soporte para: ${ticket[from].problem}</p>
     <p>ID Cliente: ${ticket[from].userId}</p>
     <p>Info Cliente: ${ticket[from].info}</p>
-    <p>Correo: ${ticket[from].email}</p>
     <p>Teléfono que genero el ticket: ${ticket[from].phone}</p>
     <p>Solicitud: ${ticket[from].type}</p>
     <p>Punto de facturación / PC: ${ticket[from].pf}</p>
@@ -118,9 +125,9 @@ const sendEmail = async (from) => {
 
   const mail = await transporter.sendMail(data);
 
-  return newTicket.id
+  console.log(ticket)
 
-  //console.log(mail)
+  return newTicket.id
 
 }
 
@@ -138,7 +145,6 @@ addProps(from,{userId: fullId})
   const user = await axios(config)
 
   if(user.data.length !== 0){
-    ticket[from].email = user.data[0].email
     ticket[from].info = user.data[0].info
     ticket[from].vip = user.data[0].vip
     ticket[from].vipmail = user.data[0].vipmail
@@ -316,6 +322,12 @@ const sendMessage = async (from,provider,ticketId) => {
     await prov.sendMessage(telefono,{text:`El cliente ${ticket[from].info} genero un ticket pidiendo soporte para ${zone} - ${ticket[from].problem}. Nivel de urgencia: ${ticket[from].priority}`})
   }
 
+  for (let i = 0; i < ticket[from].staff.phones.length; i++) {
+    
+    await prov.sendMessage(ticket[from].staff.phones[i],{text:`Se genero un ticket pidiendo soporte para ${zone} - ${ticket[from].problem}. Nivel de urgencia: ${ticket[from].priority}`})
+    
+  }
+
   delete ticket[from]
 
 }
@@ -365,6 +377,34 @@ const tvInDb = (from) => {
   }else{
     return true
   }
+}
+
+const getStaff = async (from) => {
+
+  const config = {
+    method: 'get',
+    url: `${process.env.SERVER_URL}/staffs?userId=${ticket[from].userId}`,
+  }
+
+  const staff = await axios(config).then((i) => i.data)
+
+  ticket[from].staff = {}
+  ticket[from].staff.mails = []
+  ticket[from].staff.phones = []
+
+  const mails = []
+  const phones = []
+
+  staff.map( e => {
+    if(e.zone === null || e.zone === ticket[from].zone) {
+      mails.push(e.email)
+      phones.push(e.phone)
+    }
+  })
+
+  ticket[from].staff.mails = mails
+  ticket[from].staff.phones = phones
+  
 }
 
 
