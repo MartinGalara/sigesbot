@@ -14,7 +14,7 @@ const sendEmail = async (from) => {
   await getStaff(from)
 
   let reciever = ""
-  if(ticket[from].userId === "YPtest" || ticket[from].userId === "YP31177"){
+  if(ticket[from].userId === "YPtest"){
     reciever = process.env.TESTINGMAIL
   }else{
     reciever = process.env.RECIEVER
@@ -191,11 +191,17 @@ const computers = async (from) => {
 
   const computers = await axios(config).then((i) => i.data)
 
-  computers.sort((a, b) => {
-    if (a.alias < b.alias) return -1;
-    if (a.alias > b.alias) return 1;
-    return 0;
-  });
+  const hasOrder = computers.some((computer) => computer.order !== null);
+
+  if(hasOrder){
+    computers.sort((a, b) => a.order - b.order);
+  }else{
+    computers.sort((a, b) => {
+      if (a.alias < b.alias) return -1;
+      if (a.alias > b.alias) return 1;
+      return 0;
+    });
+  }
 
   ticket[from].computers = []
   computers.map( e=> {
