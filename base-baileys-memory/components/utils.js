@@ -331,8 +331,10 @@ const sendMessage = async (from,provider,ticketId) => {
 
   for (let i = 0; i < ticket[from].staff.phones.length; i++) {
     
+    if(ticket[from].staff.phones[i]){
     await prov.sendMessage(ticket[from].staff.phones[i],{text:`Se genero un ticket pidiendo soporte para ${zone} - ${ticket[from].problem}. Nivel de urgencia: ${ticket[from].priority}`})
-    
+    }
+
   }
 
   delete ticket[from]
