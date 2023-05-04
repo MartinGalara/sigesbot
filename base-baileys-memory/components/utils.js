@@ -43,6 +43,7 @@ const sendEmail = async (from) => {
   let data = {
     from: `"WT ${newTicket.id}" <${process.env.SENDER}>`, // sender address
     to: reciever, // list of receivers
+    cc: replyTo,
     subject: `${ticket[from].info} | Soporte para ${ticket[from].problem} | ${ticket[from].pf}`, // Subject line
     text: `${ticket[from].info} | Soporte para ${ticket[from].problem} | ${ticket[from].pf}`, // plain text body
     replyTo: replyTo
