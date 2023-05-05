@@ -112,14 +112,14 @@ const flujoPrincipal = addKeyword(['sigesbot'])
        }
     flowDynamic(getBandera(ctx.from))
     })
-.addAnswer(['Si no lo conoce envie "0"'],
+.addAnswer(['Si no lo conoce, solicitarlo a un operador de SIGES'],
 {
     capture: true
 },
 async (ctx, {flowDynamic,fallBack,provider}) => {
     let id = ctx.body
 
-if(id !== "0"){
+//if(id !== "0"){
     const user = await validateUser(ctx.from,id)
     if(!user){
         const prov = provider.getInstance()
@@ -134,10 +134,10 @@ if(id !== "0"){
     setTimeout(()=> {
         flowDynamic(pcs)
     },500)
-}else{
+/* }else{
     addProps(ctx.from,{unknown: true})
     addProps(ctx.from,{id: "No brinda identificador"})
-    addProps(ctx.from,{userId: "No brinda identificador"})
+    addProps(ctx.from,{userId: "No  brinda identificador"})
     addProps(ctx.from,{email: "No brinda identificador"})
     addProps(ctx.from,{tv: "No brinda identificador"})
     addProps(ctx.from,{pf: "No brinda identificador"})
@@ -147,7 +147,7 @@ if(id !== "0"){
     setTimeout(()=> {
         flowDynamic(pcs)
     },500)
-}
+} */
 })
 .addAnswer(['Verificando'],
 {
