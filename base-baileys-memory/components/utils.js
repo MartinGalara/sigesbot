@@ -126,9 +126,22 @@ const sendEmail = async (from) => {
 
   const mail = await transporter.sendMail(data);
 
+  console.log(data.subject)
+
   console.log(ticket)
 
-  return newTicket.id
+  // Función para agregar un retraso de 5 segundos
+  function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  // Llamada a la función con retraso
+  await delay(5000);
+
+  const id = await getTicketId(data.subject)
+
+  if(id) return id
+  else return newTicket.id
 
 }
 
@@ -414,6 +427,26 @@ const getStaff = async (from) => {
   ticket[from].staff.mails = mails
   ticket[from].staff.phones = phones
   
+}
+
+const getTicketId = async (subject) => {
+
+const currentDate = new Date();
+const year = currentDate.getFullYear();
+const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+const day = String(currentDate.getDate()).padStart(2, '0');
+const formattedDate = `${year}-${month}-${day}`;
+
+const config = {
+    method: 'get',
+    url: `https://${process.env.FRESHDESK_API}:X@sistemasiges.freshdesk.com/api/v2/tickets?updated_since=${formattedDate}`,
+}
+
+const apiTickets = await axios(config).then((i) => i.data)
+
+apiTickets.map( e => {
+  if(e.subject === subject) return e.id
+})
 }
 
 
