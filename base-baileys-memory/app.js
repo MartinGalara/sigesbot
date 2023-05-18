@@ -195,7 +195,7 @@ const asd = addKeyword(['asd'])
 },
 async (ctx,{provider}) => {
 
-    //console.log(ctx)
+    console.log(ctx)
     await testing(ctx)
 
 })
