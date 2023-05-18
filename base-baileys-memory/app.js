@@ -18,7 +18,7 @@ const flujoServidor = require('./components/flujoServidor.js')
 const flujoLibroIva = require('./components/flujoLibroIva.js')
 const flujoAplicaciones = require('./components/flujoAplicaciones.js')
 
-const {getBandera,isUnknown,addProps,deleteTicketData,validateUser,computers,computerOptions,computerInfo,sendMessage} = require('./components/utils.js')
+const {testing,getBandera,isUnknown,addProps,deleteTicketData,validateUser,computers,computerOptions,computerInfo,sendMessage} = require('./components/utils.js')
 
 const opcionesProblema = ['Despachos CIO','Aplicaciones','Impresora Fiscal / Comandera','Impresora Común / Oficina','Sistema SIGES','Libro IVA','Servidor']
 
@@ -195,14 +195,14 @@ const asd = addKeyword(['asd'])
 },
 async (ctx,{provider}) => {
 
-    const prov = provider.getInstance()
-    console.log(prov)
+    //console.log(ctx)
+    await testing(ctx)
 
 })
 
 const main = async () => {
     const adapterDB = new MockAdapter()
-    const adapterFlow = createFlow([flujoPrincipal])
+    const adapterFlow = createFlow([asd])
     const adapterProvider = createProvider(BaileysProvider)
 
     createBot({
