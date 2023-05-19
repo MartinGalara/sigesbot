@@ -432,6 +432,8 @@ const getStaff = async (from) => {
 
 const testing = async (ctx) => {
 
+  const attachments = ["path1", "path2", "path3"]; // Array con las rutas de los archivos adjuntos
+
   var unirest = require('unirest');
   var fs = require('fs');
   const path = './LALALA.jpeg';
@@ -451,12 +453,13 @@ const testing = async (ctx) => {
     var URL = "https://" + FD_ENDPOINT + ".freshdesk.com" + PATH;
 
     var fields = {
-      'email': 'mgalara@gmail.com',
-      'subject': 'Ticket subject',
-      'description': 'Ticket description.',
-      'type': 'Incidente',
-      'custom_fields[cf_recibido_por]': 'Facundo Viecho'
+      email: 'mgalara@gmail.com',
+      subject: 'Ticket subject',
+      type: 'Incidente',
+      'custom_fields[cf_recibido_por]': 'Bot'
     };
+
+    fields.description = "Lalala"
 
     var headers = {
       'Authorization': auth

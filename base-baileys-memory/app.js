@@ -43,15 +43,20 @@ const flujoPrincipal = addKeyword(['sigesbot'])
 {
     capture: true
 },
-(ctx,{endFlow,fallBack}) => {
+async (ctx,{endFlow,fallBack}) => {
 
     deleteTicketData(ctx.from)
+    if(ctx.message.hasOwnProperty('imageMessage')){
+        await testing(ctx)
+        return endFlow({body: `Escriba "sigesbot" para volver a comenzar`})
+    }
     if(ctx.body === '2'){
         return endFlow({body: `Escriba "sigesbot" para volver a comenzar`})
     }
     if(ctx.body !== '1'){
         return fallBack();
     }
+    
 })
 .addAnswer(["Elija desde donde necesita soporte","1. YPF","2. SHELL","3. AXION","4. PUMA","5. GULF","6. REFINOR","7. EST. BLANCA","8. OTRO"],
     {
@@ -188,7 +193,7 @@ async (ctx,{provider}) => {
 [flujoSiges,flujoImpresoraFiscal,flujoImpresoraComun,flujoDespachosCio,flujoServidor,flujoLibroIva,flujoAplicaciones])
 
 
-const asd = addKeyword(['asdasd'])
+const asd = addKeyword(['asd'])
 .addAnswer(['enviar mensaje'],
 {
     capture: true
@@ -202,7 +207,7 @@ async (ctx,{provider}) => {
 
 const main = async () => {
     const adapterDB = new MockAdapter()
-    const adapterFlow = createFlow([asd])
+    const adapterFlow = createFlow([flujoPrincipal])
     const adapterProvider = createProvider(BaileysProvider)
 
     createBot({
