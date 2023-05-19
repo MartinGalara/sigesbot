@@ -20,8 +20,9 @@
         "got": "^12.6.0",
         "node-fetch": "^3.3.1",
         "nodemailer": "^6.9.1",
-        "puppeteer": "^19.4.3",
+        "puppeteer": "^19.5.0",
         "superagent": "^8.0.9",
+        "unirest": "^0.6.0",
         "wa-sticker-formatter": "4.3.2",
         "whatsapp-web": "^1.0.3",
         "whatsapp-web.js": "^1.19.5"

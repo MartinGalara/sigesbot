@@ -2,6 +2,7 @@ const axios = require('axios')
 const nodemailer = require("nodemailer")
 const dotenv = require("dotenv");
 const { downloadMediaMessage } = require('@adiwajshing/baileys')
+const { writeFile } = require('fs/promises')
 
 dotenv.config();
 
@@ -126,9 +127,22 @@ const sendEmail = async (from) => {
 
   const mail = await transporter.sendMail(data);
 
+  console.log(data.subject)
+
   console.log(ticket)
 
-  return newTicket.id
+  // Función para agregar un retraso de 5 segundos
+  function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  // Llamada a la función con retraso
+  await delay(5000);
+
+  const id = await getTicketId(data.subject)
+
+  if(id) return id
+  else return newTicket.id
 
 }
 
@@ -416,5 +430,66 @@ const getStaff = async (from) => {
   
 }
 
+const testing = async (ctx) => {
 
-module.exports = {tvInDb,getBandera,isUnknown,sendEmail,validateUser,addProps,computers,computerOptions,computerInfo,addAudio,addImage,deleteTicketData,sendMessage}
+  const attachments = ["path1", "path2", "path3"]; // Array con las rutas de los archivos adjuntos
+
+  var unirest = require('unirest');
+  var fs = require('fs');
+  const path = './LALALA.jpeg';
+
+  const buffer = await downloadMediaMessage(ctx, 'buffer');
+  await writeFile(path, buffer);
+
+  await new Promise((resolve, reject) => {
+    
+
+    var API_KEY = "lEAbWQZEmU4UfZ9D6ug";
+    var FD_ENDPOINT = "sistemasiges";
+
+    var PATH = "/api/v2/tickets";
+    var enocoding_method = "base64";
+    var auth = "Basic " + new Buffer(API_KEY + ":" + 'X').toString(enocoding_method);
+    var URL = "https://" + FD_ENDPOINT + ".freshdesk.com" + PATH;
+
+    var fields = {
+      email: 'mgalara@gmail.com',
+      subject: 'Ticket subject',
+      type: 'Incidente',
+      'custom_fields[cf_recibido_por]': 'Bot'
+    };
+
+    fields.description = "Lalala"
+
+    var headers = {
+      'Authorization': auth
+    };
+
+    unirest.post(URL)
+      .headers(headers)
+      .field(fields)
+      .attach('attachments[]', fs.createReadStream(path))
+      .end(function (response) {
+        console.log(response.body);
+        console.log("Response Status : " + response.status);
+        if (response.status == 201) {
+          console.log("Location Header : " + response.headers['location']);
+        } else {
+          console.log("X-Request-Id :" + response.headers['x-request-id']);
+        }
+        resolve(); // Resuelve la promesa después de que se haya ejecutado el código anterior
+      });
+  });
+
+  fs.unlink(path, (err) => {
+    if (err) {
+      console.error('Error al eliminar el archivo:', err);
+      return;
+    }
+
+    console.log('Archivo eliminado:', path);
+  });
+};
+
+
+module.exports = {testing,tvInDb,getBandera,isUnknown,sendEmail,validateUser,addProps,computers,computerOptions,computerInfo,addAudio,addImage,deleteTicketData,sendMessage}

@@ -18,7 +18,7 @@ const flujoServidor = require('./components/flujoServidor.js')
 const flujoLibroIva = require('./components/flujoLibroIva.js')
 const flujoAplicaciones = require('./components/flujoAplicaciones.js')
 
-const {getBandera,isUnknown,addProps,deleteTicketData,validateUser,computers,computerOptions,computerInfo,sendMessage} = require('./components/utils.js')
+const {testing,getBandera,isUnknown,addProps,deleteTicketData,validateUser,computers,computerOptions,computerInfo,sendMessage} = require('./components/utils.js')
 
 const opcionesProblema = ['Despachos CIO','Aplicaciones','Impresora Fiscal / Comandera','Impresora Común / Oficina','Sistema SIGES','Libro IVA','Servidor']
 
@@ -43,15 +43,20 @@ const flujoPrincipal = addKeyword(['sigesbot'])
 {
     capture: true
 },
-(ctx,{endFlow,fallBack}) => {
+async (ctx,{endFlow,fallBack}) => {
 
     deleteTicketData(ctx.from)
+    if(ctx.message.hasOwnProperty('imageMessage')){
+        await testing(ctx)
+        return endFlow({body: `Escriba "sigesbot" para volver a comenzar`})
+    }
     if(ctx.body === '2'){
         return endFlow({body: `Escriba "sigesbot" para volver a comenzar`})
     }
     if(ctx.body !== '1'){
         return fallBack();
     }
+    
 })
 .addAnswer(["Elija desde donde necesita soporte","1. YPF","2. SHELL","3. AXION","4. PUMA","5. GULF","6. REFINOR","7. EST. BLANCA","8. OTRO"],
     {
@@ -195,8 +200,8 @@ const asd = addKeyword(['asd'])
 },
 async (ctx,{provider}) => {
 
-    const prov = provider.getInstance()
-    console.log(prov)
+    console.log(ctx)
+    await testing(ctx)
 
 })
 
