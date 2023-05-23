@@ -128,6 +128,7 @@ const sendEmail = async (from) => {
   const mail = await transporter.sendMail(data);
 
   console.log(ticket)
+  console.log("ticket")
 
   return newTicket.id
 
