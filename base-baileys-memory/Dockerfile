@@ -1,7 +1,7 @@
 FROM node:18-bullseye as bot
 WORKDIR /app
 COPY package*.json ./
-RUN NODE_ENV=development npm i
+RUN npm i
 COPY . .
 ARG RAILWAY_STATIC_URL
 ARG PUBLIC_URL
