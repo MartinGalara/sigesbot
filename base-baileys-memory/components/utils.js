@@ -131,18 +131,7 @@ const sendEmail = async (from) => {
 
   console.log(ticket)
 
-  // Función para agregar un retraso de 5 segundos
-  function delay(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-  }
-
-  // Llamada a la función con retraso
-  await delay(5000);
-
-  const id = await getTicketId(data.subject)
-
-  if(id) return id
-  else return newTicket.id
+  return newTicket.id
 
 }
 
